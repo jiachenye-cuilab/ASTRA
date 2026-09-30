@@ -1,0 +1,147 @@
+{
+  "model_weights": {
+    "ASTRA": {
+      "model_name": "ASTRA",
+      "weight_file": "model/checkpoint.pt",
+      "config_file": "model/config.json",
+      "sha256": "4de126c42da5e8b38b8a7fee2312cfd627d71477a5d9c6f2168cfc77e4b4e39d",
+      "source_resource_id": "ASTRA",
+      "image_preprocessing": "raw",
+      "supported_tasks": [
+        "HD16",
+        "Spot55"
+      ]
+    },
+    "UNI": {
+      "type": "model_weights",
+      "weight_file": "weights/UNI/pytorch_model.bin",
+      "config_file": "model/uni_config.json",
+      "sha256": "56ef09b44a25dc5c7eedc55551b3d47bcd17659a7a33837cf9abc9ec4e2ffb40"
+    }
+  },
+  "model_recipes": {
+    "ASTRA fine-tuned": {
+      "type": "target_adaptation_recipe",
+      "base_resource_id": "ASTRA",
+      "config_file": "model/fine_tuning.json",
+      "supported_tasks": [
+        "HD16",
+        "Spot55"
+      ],
+      "requires_target_adaptation": true,
+      "checkpoint_scope": "one_target_section_and_one_observation_task"
+    }
+  },
+  "datasets": {
+    "WT_Colon_FF_11mm": {
+      "type": "dataset",
+      "collection": "visium_hd_wt",
+      "platform": "10x Visium HD Whole Transcriptome",
+      "preservation": "Fresh Frozen",
+      "description": "11 mm fresh-frozen human colon cancer section with WT Visium HD and H&E.",
+      "feature_slice": "data/WT_Colon_FF_11mm/Visium_HD_11mm_Human_Colon_Cancer_Fresh_Frozen_feature_slice.h5",
+      "tissue_image": "data/WT_Colon_FF_11mm/Visium_HD_11mm_Human_Colon_Cancer_Fresh_Frozen_tissue_image.btf"
+    },
+    "WT_Brain_FFPE_6p5mm": {
+      "type": "dataset",
+      "collection": "visium_hd_wt",
+      "platform": "10x Visium HD Whole Transcriptome",
+      "preservation": "FFPE",
+      "description": "Human brain cancer FFPE section with WT Visium HD and H&E.",
+      "feature_slice": "data/WT_Brain_FFPE_6p5mm/Visium_HD_6p5mm_Human_Brain_Cancer_feature_slice.h5",
+      "tissue_image": "data/WT_Brain_FFPE_6p5mm/Visium_HD_6p5mm_Human_Brain_Cancer_tissue_image.btf"
+    },
+    "WT_Kidney_FFPE_6p5mm": {
+      "type": "dataset",
+      "collection": "visium_hd_wt",
+      "platform": "10x Visium HD Whole Transcriptome",
+      "preservation": "FFPE",
+      "description": "Human kidney FFPE section with WT Visium HD and H&E. Space Ranger 4.0.1 is the default input; version 3.1.2 reprocesses the same section.",
+      "source_url": "https://www.10xgenomics.com/datasets/visium-hd-cytassist-gene-expression-libraries-human-kidney-ffpe-v4",
+      "feature_slice": "data/WT_Kidney_FFPE_6p5mm/Visium_HD_Human_Kidney_FFPE_feature_slice.h5",
+      "tissue_image": "data/WT_Kidney_FFPE_6p5mm/Visium_HD_Human_Kidney_FFPE_tissue_image.btf"
+    },
+    "WT_Lymph_Node_FFPE_6p5mm": {
+      "type": "dataset",
+      "collection": "visium_hd_wt",
+      "platform": "10x Visium HD Whole Transcriptome",
+      "preservation": "FFPE",
+      "description": "Human lymph node FFPE section with WT Visium HD and H&E, processed with Space Ranger 4.0.1.",
+      "source_url": "https://www.10xgenomics.com/datasets/visium-hd-cytassist-gene-expression-libraries-human-lymph-node-v4",
+      "feature_slice": "data/WT_Lymph_Node_FFPE_6p5mm/Visium_HD_Human_Lymph_Node_FFPE_feature_slice.h5",
+      "tissue_image": "data/WT_Lymph_Node_FFPE_6p5mm/Visium_HD_Human_Lymph_Node_FFPE_tissue_image.tif"
+    },
+    "WT_Prostate_FFPE_6p5mm": {
+      "type": "dataset",
+      "collection": "visium_hd_wt",
+      "platform": "10x Visium HD Whole Transcriptome",
+      "preservation": "FFPE",
+      "description": "Human prostate cancer FFPE section with WT Visium HD and H&E.",
+      "feature_slice": "data/WT_Prostate_FFPE_6p5mm/Visium_HD_Human_Prostate_Cancer_FFPE_feature_slice.h5",
+      "tissue_image": "data/WT_Prostate_FFPE_6p5mm/Visium_HD_Human_Prostate_Cancer_FFPE_tissue_image.tif"
+    },
+    "WT_Breast_Fixed_Frozen_11mm": {
+      "type": "dataset",
+      "collection": "visium_hd_wt",
+      "platform": "10x Visium HD Whole Transcriptome",
+      "preservation": "Fixed Frozen",
+      "description": "11 mm fixed-frozen human breast cancer section with WT Visium HD and H&E.",
+      "feature_slice": "data/WT_Breast_Fixed_Frozen_11mm/Visium_HD_11mm_Human_Breast_Cancer_feature_slice.h5",
+      "tissue_image": "data/WT_Breast_Fixed_Frozen_11mm/Visium_HD_11mm_Human_Breast_Cancer_tissue_image.btf"
+    },
+    "WT_Heart_FFPE_6p5mm": {
+      "type": "dataset",
+      "collection": "visium_hd_wt",
+      "platform": "10x Visium HD Whole Transcriptome",
+      "preservation": "FFPE",
+      "description": "Human heart FFPE section with WT Visium HD and H&E.",
+      "feature_slice": "data/WT_Heart_FFPE_6p5mm/Visium_HD_6p5mm_Human_Heart_feature_slice.h5",
+      "tissue_image": "data/WT_Heart_FFPE_6p5mm/Visium_HD_6p5mm_Human_Heart_tissue_image.btf"
+    },
+    "WT_Pancreas_FFPE_11mm": {
+      "type": "dataset",
+      "collection": "visium_hd_wt",
+      "platform": "10x Visium HD Whole Transcriptome",
+      "preservation": "FFPE",
+      "description": "11 mm human pancreas FFPE section with WT Visium HD and H&E.",
+      "feature_slice": "data/WT_Pancreas_FFPE_11mm/Visium_HD_11mm_Human_Pancreas_feature_slice.h5",
+      "tissue_image": "data/WT_Pancreas_FFPE_11mm/Visium_HD_11mm_Human_Pancreas_tissue_image.btf"
+    },
+    "HD3_Ovarian_Cancer": {
+      "type": "dataset",
+      "collection": "visium_hd_3prime",
+      "platform": "10x Visium HD 3'",
+      "preservation": "Fresh Frozen",
+      "description": "Human ovarian cancer section with Visium HD 3' and H&E.",
+      "feature_slice": "data/HD3_Ovarian_Cancer/Visium_HD_3prime_Human_Ovarian_Cancer_feature_slice.h5",
+      "tissue_image": "data/HD3_Ovarian_Cancer/Visium_HD_3prime_Human_Ovarian_Cancer_tissue_image.btf"
+    },
+    "HD3_Lymph_Node": {
+      "type": "dataset",
+      "collection": "visium_hd_3prime",
+      "platform": "10x Visium HD 3'",
+      "preservation": "Fresh Frozen",
+      "description": "Human lymph node section with Visium HD 3' and H&E.",
+      "feature_slice": "data/HD3_Lymph_Node/Visium_HD_3prime_Human_Lymph_Node_feature_slice.h5",
+      "tissue_image": "data/HD3_Lymph_Node/Visium_HD_3prime_Human_Lymph_Node_tissue_image.btf"
+    },
+    "HD3_Tonsil": {
+      "type": "dataset",
+      "collection": "visium_hd_3prime",
+      "platform": "10x Visium HD 3'",
+      "preservation": "Fresh Frozen",
+      "description": "Human tonsil section with Visium HD 3' and H&E.",
+      "feature_slice": "data/HD3_Tonsil/Visium_HD_3prime_Human_Tonsil_feature_slice.h5",
+      "tissue_image": "data/HD3_Tonsil/Visium_HD_3prime_Human_Tonsil_tissue_image.btf"
+    },
+    "HD3_Pancreatic_Cancer": {
+      "type": "dataset",
+      "collection": "visium_hd_3prime",
+      "platform": "10x Visium HD 3'",
+      "preservation": "Fresh Frozen",
+      "description": "Human pancreatic cancer section with Visium HD 3' and H&E.",
+      "feature_slice": "data/HD3_Pancreatic_Cancer/Visium_HD_3prime_Human_Pancreatic_Cancer_feature_slice.h5",
+      "tissue_image": "data/HD3_Pancreatic_Cancer/Visium_HD_3prime_Human_Pancreatic_Cancer_tissue_image.btf"
+    }
+  }
+}

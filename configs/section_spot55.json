@@ -1,0 +1,15 @@
+{
+  "sample_id": "my-section",
+  "task": "Spot55",
+  "protocol_id": 1,
+  "counts": "../data/spot55_counts.npy",
+  "gene_ids": "../data/measured_gene_ids.json",
+  "spot_yx_um": "../data/spot_yx_um.npy",
+  "query_yx_8um": "../data/query_yx_8um.npy",
+  "capture_shape_yx_2um": [3000, 3000],
+  "spot_to_image": [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]],
+  "tissue_image": "../data/registered_he.tif",
+  "uni_checkpoint": "../weights/pytorch_model.bin",
+  "core_um": 160,
+  "stride_um": 144
+}

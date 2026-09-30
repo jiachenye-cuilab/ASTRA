@@ -1,0 +1,99 @@
+{
+  "resource_registry": "resource.json",
+  "wt": {
+    "train": [
+      "WT_Colon_FF_11mm",
+      "WT_Brain_FFPE_6p5mm",
+      "WT_Kidney_FFPE_6p5mm",
+      "WT_Lymph_Node_FFPE_6p5mm",
+      "WT_Prostate_FFPE_6p5mm",
+      "WT_Breast_Fixed_Frozen_11mm"
+    ],
+    "validation": [
+      "WT_Heart_FFPE_6p5mm",
+      "WT_Pancreas_FFPE_11mm"
+    ],
+    "test": [
+      "WT_Ovarian_FF_6p5mm",
+      "WT_Breast_FF_Ultima",
+      "WT_Colorectal_FFPE_6p5mm",
+      "WT_Colon_FFPE_6p5mm",
+      "WT_Pancreas_FFPE_6p5mm_v4p0p1"
+    ]
+  },
+  "three_prime": {
+    "auxiliary_train": [
+      "HD3_Ovarian_Cancer",
+      "HD3_Lymph_Node",
+      "HD3_Tonsil"
+    ],
+    "validation": [
+      "HD3_Pancreatic_Cancer"
+    ],
+    "test": [
+      "HD3_Ovarian_Cancer_FF"
+    ]
+  },
+  "cache": {
+    "train_root": "outputs/training-cache/train",
+    "validation_root": "outputs/training-cache/validation",
+    "uni_resource_id": "UNI",
+    "uni_root": "outputs/training-cache/uni",
+    "uni_summary": "outputs/training-cache/uni/summary.json",
+    "validation_layout_root": "outputs/training-cache/layouts",
+    "spatial_split_artifact": "training/panel_fit_spatial.json",
+    "semantics": "immutable_input_artifacts_only; native_sparse_records_reaggregated_to_current_output_panel",
+    "allow_gene_superset": true
+  },
+  "model": {
+    "image_feature_dimension": 6,
+    "use_extra_input_genes": true,
+    "use_three_prime_adapter": true,
+    "field_shape": [
+      128,
+      128
+    ],
+    "cell_um": 2.0,
+    "image_channels": 128,
+    "parent_channels": 64,
+    "width": 128,
+    "image_dilations": [
+      1,
+      2,
+      4
+    ],
+    "image_local_residual_blocks": 2,
+    "image_group_norm_groups": 8,
+    "expanded_cell_width": 256,
+    "expanded_segment_width": 512,
+    "expanded_blocks": 2,
+    "segment_residual_bound": 2.0,
+    "context_width": 128,
+    "context_neighbors": 8,
+    "context_radius_um": null,
+    "query_chunk_size": 128,
+    "pathology_channels": 1024,
+    "gap_prior_mode": "local",
+    "efficient_execution": true,
+    "use_pathology": true,
+    "use_local_read": true,
+    "use_multiscale": true,
+    "parent_graph": false,
+    "context_heads": 1,
+    "adaptive_fusion": false,
+    "parent_image_context": true,
+    "image_guided_read": true,
+    "interpolation_power": 2.0,
+    "interpolation_epsilon_um": 1.0,
+    "output_head_mode": "shared",
+    "context_position_scale_um": 128.0,
+    "context_weighting": "attention"
+  },
+  "image_preprocessing": {
+    "mode": "raw"
+  },
+  "panel_artifact": "training/panel.json",
+  "dataset_split": "training/dataset_split.json",
+  "split_id": "sr4_18sections_dev12_cv4_test6_v3",
+  "fold": "fold1"
+}

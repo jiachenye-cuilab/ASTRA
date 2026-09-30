@@ -1,0 +1,6 @@
+# Versions used for validation; install into a dedicated local environment.
+torch==2.5.1
+torchvision==0.20.1
+timm==1.0.28
+numpy==2.0.1
+Pillow==11.3.0

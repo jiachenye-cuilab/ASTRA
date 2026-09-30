@@ -1,0 +1,2 @@
+# Dependencies for sparse observations and registered TIFFs.
+-r requirements-training.txt

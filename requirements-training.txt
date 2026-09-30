@@ -1,0 +1,6 @@
+# Additional packages for preparing raw feature_slice H5 and TIFF/BTF inputs.
+# These versions were already present in the source preparation environment.
+-r requirements.txt
+h5py==3.16.0
+tifffile==2026.3.3
+scipy==1.18.0

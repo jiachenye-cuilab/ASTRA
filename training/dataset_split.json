@@ -1,0 +1,95 @@
+{
+  "split_id": "sr4_18sections_dev12_cv4_test6_v3",
+  "resource_registry": "resource.json",
+  "scope": "experiment_shared_dataset_partition",
+  "eligibility": {
+    "space_ranger_minimum": "4.0.0",
+    "umi_refinement_record_required": true,
+    "umi_refinement_failure_flags_must_be_false": true,
+    "tissue_arrays_included": false,
+    "version_filter_is_not_local_registration_validation": true
+  },
+  "cross_validation": {
+    "unit": "whole_section_with_known_related_sections_kept_together",
+    "n_splits": 4,
+    "train_rule": "union_of_the_other_three_validation_folds",
+    "validation_folds": {
+      "fold1": [
+        "WT_Heart_FFPE_6p5mm",
+        "WT_Pancreas_FFPE_11mm",
+        "HD3_Pancreatic_Cancer"
+      ],
+      "fold2": [
+        "WT_Colon_FF_11mm",
+        "WT_Brain_FFPE_6p5mm",
+        "HD3_Ovarian_Cancer"
+      ],
+      "fold3": [
+        "WT_Kidney_FFPE_6p5mm",
+        "WT_Lymph_Node_FFPE_6p5mm",
+        "HD3_Lymph_Node"
+      ],
+      "fold4": [
+        "WT_Prostate_FFPE_6p5mm",
+        "WT_Breast_Fixed_Frozen_11mm",
+        "HD3_Tonsil"
+      ]
+    },
+    "grouping_note": "Heart and tonsil are included in development to increase tissue coverage. The remaining development pancreas pair and lymph-node pair are each kept in one validation fold as conservative tissue groups, not assertions of shared donors. Each of four folds validates on 2 WT / 1 HD3 and trains on 6 WT / 3 HD3. Donor metadata remain incomplete."
+  },
+  "fixed_test_groups": {
+    "ovarian_dls_65_adjacent_sections": [
+      "WT_Ovarian_FF_6p5mm",
+      "HD3_Ovarian_Cancer_FF"
+    ],
+    "breast_ultima": [
+      "WT_Breast_FF_Ultima"
+    ],
+    "Human_CRC_P2": [
+      "WT_Colorectal_FFPE_6p5mm"
+    ],
+    "colon_ffpe_6p5mm": [
+      "WT_Colon_FFPE_6p5mm"
+    ],
+    "pancreas_ffpe_6p5mm": [
+      "WT_Pancreas_FFPE_6p5mm_v4p0p1"
+    ]
+  },
+  "same_section_assets_excluded_from_fit_and_selection": [
+    "WT_CRC_P2_FFPE_v3p0p0"
+  ],
+  "partition_rationale": {
+    "development_coverage": "Retain heart WT and tonsil HD3; retain colon WT FF 11 mm, pancreas WT FFPE 11 mm and pancreatic-cancer HD3. Same-organ normal WT and cancer HD3 are not duplicate biological samples.",
+    "pancreas_donors": "WT 11 mm: male, age 36, Donor Network West; WT 6.5 mm: female, Avaden Biosciences. These two WT sections have distinct donors.",
+    "pancreas_test_image_quality": "The official 6.5 mm WT page reports localized H&E focus issues. Keep this test section and report it individually; a normal registration record does not remove image blur.",
+    "colon_sources": "FF 11 mm: BioIVT; FFPE 6.5 mm: Precision Biospecimen Solution. No shared-donor relation is documented in the checked pages; different suppliers alone do not establish independence.",
+    "assay_tradeoff": "Development 8 WT / 4 HD3; fixed test 5 WT / 1 HD3. This increases development tissue coverage but leaves only one HD3 test section."
+  },
+  "fit_boundaries": {
+    "cv_preprocessing_fit": "current_fold_nine_training_sections_and_training_regions_only",
+    "cv_model_initialization": "from_scratch_no_previous_SRNO_checkpoint",
+    "reinhard_reference_if_enabled": "current_fold_training_sections_only",
+    "reinhard_source_statistics_if_enabled": "each_section_own_HE_only_no_fine_expression",
+    "test_fine_expression_use": "evaluation_only_after_final_model_is_locked",
+    "test_fit_or_model_selection": false,
+    "final_refit": "all_12_development_sections_from_scratch_after_CV_selection",
+    "final_training_duration": "predefine_from_CV_before_test_evaluation",
+    "final_model_strategy": "single_refit_model_not_best_test_fold_selection",
+    "train_section_spatial_holdout": "retain_fixed_nonoverlapping_regions_excluded_from_fit"
+  },
+  "reporting": {
+    "validation": "per_section_metrics_and_WT_HD3_separate_summaries_across_all_four_folds",
+    "test": "per_section_metrics_plus_source_group_summary_with_the_ovarian_pair_counted_once",
+    "test_group_independence": "five_groups_after_merging_the_confirmed_ovarian_pair_not_a_complete_donor_identity_audit"
+  },
+  "source_evidence": {
+    "ovarian_adjacent_sections": "https://www.10xgenomics.com/datasets/visium-hd-cytassist-gene-expression-ovarian-cancer-discovery-fresh-frozen",
+    "distinct_training_ovarian_donor": "https://www.10xgenomics.com/datasets/visium-hd-three-prime-ovarian-cancer-fresh-frozen",
+    "crc_p2_v4": "https://www.10xgenomics.com/datasets/visium-hd-cytassist-gene-expression-libraries-of-human-crc-v4",
+    "tonsil": "https://www.10xgenomics.com/datasets/visium-hd-three-prime-human-tonsil-fresh-frozen",
+    "pancreas_wt_6p5mm": "https://www.10xgenomics.com/datasets/visium-hd-cytassist-gene-expression-libraries-human-pancreas-4",
+    "pancreas_wt_11mm": "https://www.10xgenomics.com/datasets/visium-hd-cytassist-11mm-human-pancreas",
+    "colon_wt_ff_11mm": "https://www.10xgenomics.com/datasets/visium-hd-cytassist-11mm-human-colon-cancer-HE",
+    "colon_wt_ffpe_6p5mm": "https://www.10xgenomics.com/datasets/visium-hd-cytassist-6p5mm-human-colon-cancer"
+  }
+}

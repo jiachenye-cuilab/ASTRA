@@ -1,0 +1,16 @@
+{
+  "uni_checkpoint": "../weights/pytorch_model.bin",
+  "formal_training": false,
+  "max_epochs": 240,
+  "sections": [
+    {
+      "sample_id": "my-training-section",
+      "role": "train",
+      "protocol_id": 1,
+      "feature_slice": "../data/my-training-section/feature_slice.h5",
+      "tissue_image": "../data/my-training-section/registered_he.tif",
+      "blocks_yx_2um": [[0, 0], [0, 256], [256, 0]],
+      "monitor_blocks_yx_2um": [[0, 0], [0, 256]]
+    }
+  ]
+}

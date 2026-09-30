@@ -1,0 +1,8 @@
+{
+  "sample_id": "WT_Ovarian_FF_6p5mm",
+  "task": "HD16",
+  "protocol_id": 1,
+  "feature_slice": "../data/WT_Ovarian_FF_6p5mm/feature_slice.h5",
+  "tissue_image": "../data/WT_Ovarian_FF_6p5mm/tissue_image.tif",
+  "uni_checkpoint": "../weights/pytorch_model.bin"
+}

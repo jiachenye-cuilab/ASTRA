@@ -1,0 +1,14 @@
+{
+  "sample_id": "my-section",
+  "task": "HD16",
+  "protocol_id": 1,
+  "counts": "../data/hd16_counts.npz",
+  "gene_ids": "../data/measured_gene_ids.json",
+  "parent_yx_16um": "../data/parent_yx_16um.npy",
+  "capture_shape_yx_2um": [3000, 3000],
+  "spot_to_image": [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]],
+  "tissue_image": "../data/registered_he.tif",
+  "uni_checkpoint": "../weights/pytorch_model.bin",
+  "core_um": 160,
+  "stride_um": 160
+}

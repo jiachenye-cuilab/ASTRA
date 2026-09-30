@@ -1,0 +1,64 @@
+{
+  "training": {
+    "seed": 20260914,
+    "epochs": 50,
+    "fields_per_epoch": 64,
+    "batch_size": 4,
+    "gradient_accumulation_steps": 4,
+    "optimizer_updates": 200,
+    "field_exposures": 3200,
+    "learning_rate": 3e-05,
+    "weight_decay": 0.0001,
+    "max_gradient_norm": 1,
+    "warmup_updates": 8,
+    "selection_interval": 10,
+    "fine_preservation_weight": 0.25,
+    "trainable_parameters": "full_SRNO",
+    "frozen_parameters": "UNI_and_initial_source_teacher",
+    "stopping": "fixed_50_epoch_budget; select_best_coarse_NLL_including_epoch0; no_patience_claim"
+  },
+  "tasks": {
+    "HD16": {
+      "arm": "hd16_preserve025",
+      "observed_input": "16um_raw_counts",
+      "self_supervision": "32um_aggregates_to_observed_16um_counts",
+      "checkpoint_selection": "32_to_16_NLL_on_separate_coarse_selection_FOVs",
+      "prediction": "16um_to_8um"
+    },
+    "Spot55": {
+      "arm": "spot55_preserve025",
+      "observed_input": "raw_counts_and_supports_of_measured_55um_spots",
+      "self_supervision": "sum_neighbor_spot_counts_and_union_measured_support_then_predict_original_spot_counts",
+      "checkpoint_selection": "merged_spots_to_original_spots_NLL_on_separate_coarse_selection_FOVs",
+      "spot_selection_pair_views": 2,
+      "spot_neighbor_distance_um": 110,
+      "prediction": "55um_spots_to_8um_including_gaps"
+    }
+  },
+  "target_input_boundary": {
+    "query_coarse_observations_used_for_adaptation": true,
+    "query_8um_labels_used_for_adaptation_or_epoch_selection": false,
+    "Spot55_requires_no_unobserved_16um_truth": true
+  },
+  "model_name": "ASTRA fine-tuned",
+  "source_resource_id": "ASTRA fine-tuned",
+  "base_resource_id": "ASTRA",
+  "image_preprocessing": "raw",
+  "supervision_core_um": 160,
+  "source_implementation": "astra/fine_tuning/fp32.py",
+  "arithmetic_dtype": "float32",
+  "default_geometry": {
+    "HD16": {
+      "field_um": 256,
+      "core_um": 160,
+      "stride_um": 160,
+      "context_margin_um": 48
+    },
+    "Spot55": {
+      "field_um": 256,
+      "core_um": 160,
+      "stride_um": 144,
+      "context_margin_um": 48
+    }
+  }
+}

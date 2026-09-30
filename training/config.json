@@ -1,0 +1,246 @@
+{
+  "schema_version": 1,
+  "experiment_id": "ASTRA/base-training",
+  "role": "ASTRA_base_training_spatial_holdout_selection",
+  "resource_registry": "resource.json",
+  "output_root": "outputs/training",
+  "panel_artifact": "training/panel.json",
+  "panel_size": 2000,
+  "supervision_core_um": 160,
+  "wt": {
+    "train": [
+      "WT_Colon_FF_11mm",
+      "WT_Brain_FFPE_6p5mm",
+      "WT_Kidney_FFPE_6p5mm",
+      "WT_Lymph_Node_FFPE_6p5mm",
+      "WT_Prostate_FFPE_6p5mm",
+      "WT_Breast_Fixed_Frozen_11mm",
+      "WT_Heart_FFPE_6p5mm",
+      "WT_Pancreas_FFPE_11mm"
+    ],
+    "validation": [],
+    "test": [
+      "WT_Ovarian_FF_6p5mm",
+      "WT_Breast_FF_Ultima",
+      "WT_Colorectal_FFPE_6p5mm",
+      "WT_Colon_FFPE_6p5mm",
+      "WT_Pancreas_FFPE_6p5mm_v4p0p1"
+    ]
+  },
+  "three_prime": {
+    "auxiliary_train": [
+      "HD3_Ovarian_Cancer",
+      "HD3_Lymph_Node",
+      "HD3_Tonsil",
+      "HD3_Pancreatic_Cancer"
+    ],
+    "validation": [],
+    "test": [
+      "HD3_Ovarian_Cancer_FF"
+    ]
+  },
+  "cache": {
+    "train_root": "outputs/training-cache/train",
+    "validation_root": "outputs/training-cache/validation",
+    "uni_resource_id": "UNI",
+    "uni_root": "outputs/training-cache/uni",
+    "uni_summary": "outputs/training-cache/uni/summary.json",
+    "validation_layout_root": "outputs/training-cache/layouts",
+    "spatial_split_artifact": "training/spatial_split.json",
+    "semantics": "immutable_input_artifacts_only; native_sparse_records_reaggregated_to_current_output_panel",
+    "allow_gene_superset": true
+  },
+  "model": {
+    "image_feature_dimension": 6,
+    "use_extra_input_genes": true,
+    "use_three_prime_adapter": true,
+    "field_shape": [
+      128,
+      128
+    ],
+    "cell_um": 2.0,
+    "image_channels": 128,
+    "parent_channels": 64,
+    "width": 128,
+    "image_dilations": [
+      1,
+      2,
+      4
+    ],
+    "image_local_residual_blocks": 2,
+    "image_group_norm_groups": 8,
+    "expanded_cell_width": 256,
+    "expanded_segment_width": 512,
+    "expanded_blocks": 2,
+    "segment_residual_bound": 2.0,
+    "context_width": 128,
+    "context_neighbors": 8,
+    "context_radius_um": null,
+    "query_chunk_size": 128,
+    "pathology_channels": 1024,
+    "gap_prior_mode": "local",
+    "efficient_execution": true,
+    "use_pathology": true,
+    "use_local_read": true,
+    "use_multiscale": true,
+    "parent_graph": false,
+    "context_heads": 1,
+    "adaptive_fusion": false,
+    "parent_image_context": true,
+    "image_guided_read": true,
+    "interpolation_power": 2.0,
+    "interpolation_epsilon_um": 1.0,
+    "context_position_scale_um": 128.0,
+    "context_weighting": "attention"
+  },
+  "training": {
+    "formal_training": true,
+    "seed": 20260907,
+    "batch_size": 16,
+    "gradient_accumulation_steps": 1,
+    "learning_rate": 0.0003,
+    "weight_decay": 0.0001,
+    "region_weights": {
+      "covered": 1.0,
+      "gap": 1.0,
+      "mixed": 1.0
+    },
+    "max_gradient_norm": 1.0,
+    "warmup_optimizer_steps": 12,
+    "plateau_factor": 0.5,
+    "plateau_patience_checks": 5,
+    "minimum_learning_rate_ratio": 0.25,
+    "max_epochs": 240,
+    "minimum_epochs": 30,
+    "validation_interval": 3,
+    "patience_checks": 10,
+    "validation_fields_per_section": 100,
+    "fields_per_section": 100,
+    "section_field_overrides": {},
+    "fields_per_epoch": 1200,
+    "sampling_mode": "fresh_then_shuffled_cycles",
+    "cpu_threads": 4,
+    "parent_probabilities": {
+      "random": 1.0,
+      "HD16": 0.0,
+      "Spot55": 0.0
+    },
+    "generator": {
+      "field_shape": [
+        128,
+        128
+      ],
+      "cell_um": 2.0,
+      "minimum_parent_area_children": 64,
+      "maximum_parent_area_children": 768,
+      "maximum_parents": 256,
+      "q_range": [
+        2.0,
+        16.0
+      ],
+      "axis_ratio_range": [
+        0.75,
+        1.33
+      ],
+      "coverage_strata": [
+        [
+          0.15,
+          0.45
+        ],
+        [
+          0.45,
+          0.8
+        ],
+        [
+          0.8,
+          1.0
+        ]
+      ],
+      "coverage_tolerance": 0.05,
+      "maximum_attempts": 32
+    },
+    "warmup_clock": "optimizer_updates",
+    "milestone_epochs": [],
+    "cuda_memory_fraction": 0.75,
+    "training_loss": {
+      "umi_floor": 0,
+      "parent_kl_coefficient": 0,
+      "parent_kl_direction": "area_to_prediction",
+      "parent_scope": "fully_inside_core"
+    },
+    "batch_pipeline": "device",
+    "cuda_mask_batch_size": 96,
+    "empty_cache_reserved_threshold_gib": 48,
+    "random_validation_fields_per_section": 30,
+    "learning_rate_schedule": "warmup_cosine_over_actual_optimizer_steps"
+  },
+  "selection": {
+    "rule": "bounded_regression_fixed_initial_anchor",
+    "tasks": [
+      "HD16",
+      "Spot55"
+    ],
+    "data": "development_spatial_holdout",
+    "aggregation": "equal_FOV_within_section_then_equal_all_12_development_sections",
+    "reference": "last_accepted_checkpoint_with_fixed_initial_anchor_guard",
+    "minimum_improvement": {
+      "HD16": 0.0001,
+      "Spot55": 0.001
+    },
+    "maximum_regression": {
+      "HD16": 0.0001,
+      "Spot55": 0.001
+    },
+    "first_finite_validation": "initialize_best",
+    "accepted_checkpoint": "save_best_and_reset_patience",
+    "rejected_checkpoint": "retain_best_and_increment_patience",
+    "area_baseline": "diagnostic_only_not_additional_selection_gate",
+    "fixed_anchor": "first_finite_validation_per_arm"
+  },
+  "smoke": {
+    "training_fields": 3,
+    "validation_fields_per_section": 1,
+    "batch_size": 1,
+    "epochs": 1
+  },
+  "boundaries": {
+    "initialization": "scratch_no_SRNO_checkpoint",
+    "test_expression_read": false,
+    "panel": "unchanged_Flash_ordered_2000_original_nine_section_provenance",
+    "training_coordinates": "existing_training_indices_excluding_all_spatial_monitor_blocks",
+    "validation": "12_development_sections_eight_disjoint_monitor_FOVs_each_for_joint_selection",
+    "formal_training": "user_authorized_2026_09_16"
+  },
+  "diagnostics": {
+    "enabled": true,
+    "interval_epochs": 3,
+    "monitor_fields_per_section": 8,
+    "smoke_monitor_sections": [
+      "WT_Colon_FF_11mm",
+      "HD3_Ovarian_Cancer"
+    ],
+    "smoke_monitor_fields_per_section": 1,
+    "gene_groups_from_panel": false,
+    "parent_count_strata": false,
+    "allocation_decomposition": false
+  },
+  "model_family": "v030",
+  "image_preprocessing": {
+    "mode": "raw"
+  },
+  "dataset_split": "training/dataset_split.json",
+  "split_id": "sr4_18sections_dev12_cv4_test6_v3",
+  "fold": "final_refit",
+  "validation_tasks": [
+    "HD16",
+    "Spot55"
+  ],
+  "final_evaluation_tasks": [],
+  "final_refit_preprocessing_reference": "training/panel_reference.json",
+  "final_refit": {
+    "scope": "all_12_development_from_scratch",
+    "epoch": 240,
+    "model_strategy": "single_refit_model_not_best_test_fold_selection",
+    "selection": "development_spatial_holdout"
+  }
+}

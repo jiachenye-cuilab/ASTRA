@@ -1,0 +1,14 @@
+{
+  "sample_id": "my-ST-TNBC-section",
+  "task": "ST100",
+  "protocol_id": 0,
+  "diameter_um": 100,
+  "pitch_um": 150,
+  "counts": "../data/st100_counts.npz",
+  "gene_ids": "../data/measured_gene_ids.json",
+  "spot_yx_um": "../data/st100_spot_yx_um.npy",
+  "capture_shape_yx_2um": [3000, 3000],
+  "spot_to_image": [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]],
+  "tissue_image": "../data/registered_he.tif",
+  "uni_checkpoint": "../weights/pytorch_model.bin"
+}

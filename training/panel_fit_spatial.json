@@ -1,0 +1,823 @@
+{
+  "sections": {
+    "WT_Colon_FF_11mm": {
+      "protocol_id": 1,
+      "source_fields": 115915,
+      "retained_fields": 113867,
+      "excluded_fields": 2048,
+      "block_origins_yx_2um": [
+        [
+          896,
+          3200
+        ],
+        [
+          896,
+          3712
+        ]
+      ],
+      "training_indices": "training/geometry/WT_Colon_FF_11mm_training_indices.npy",
+      "monitor_items": [
+        {
+          "sample": "WT_Colon_FF_11mm",
+          "protocol_id": 1,
+          "field_index": 103175,
+          "start_yx_2um": [
+            896,
+            3200
+          ]
+        },
+        {
+          "sample": "WT_Colon_FF_11mm",
+          "protocol_id": 1,
+          "field_index": 39321,
+          "start_yx_2um": [
+            896,
+            3328
+          ]
+        },
+        {
+          "sample": "WT_Colon_FF_11mm",
+          "protocol_id": 1,
+          "field_index": 35706,
+          "start_yx_2um": [
+            1024,
+            3200
+          ]
+        },
+        {
+          "sample": "WT_Colon_FF_11mm",
+          "protocol_id": 1,
+          "field_index": 21133,
+          "start_yx_2um": [
+            1024,
+            3328
+          ]
+        },
+        {
+          "sample": "WT_Colon_FF_11mm",
+          "protocol_id": 1,
+          "field_index": 15414,
+          "start_yx_2um": [
+            896,
+            3712
+          ]
+        },
+        {
+          "sample": "WT_Colon_FF_11mm",
+          "protocol_id": 1,
+          "field_index": 99930,
+          "start_yx_2um": [
+            896,
+            3840
+          ]
+        },
+        {
+          "sample": "WT_Colon_FF_11mm",
+          "protocol_id": 1,
+          "field_index": 32947,
+          "start_yx_2um": [
+            1024,
+            3712
+          ]
+        },
+        {
+          "sample": "WT_Colon_FF_11mm",
+          "protocol_id": 1,
+          "field_index": 104005,
+          "start_yx_2um": [
+            1024,
+            3840
+          ]
+        }
+      ]
+    },
+    "WT_Brain_FFPE_6p5mm": {
+      "protocol_id": 1,
+      "source_fields": 36877,
+      "retained_fields": 35309,
+      "excluded_fields": 1568,
+      "block_origins_yx_2um": [
+        [
+          2560,
+          128
+        ],
+        [
+          1664,
+          384
+        ]
+      ],
+      "training_indices": "training/geometry/WT_Brain_FFPE_6p5mm_training_indices.npy",
+      "monitor_items": [
+        {
+          "sample": "WT_Brain_FFPE_6p5mm",
+          "protocol_id": 1,
+          "field_index": 14574,
+          "start_yx_2um": [
+            2560,
+            128
+          ]
+        },
+        {
+          "sample": "WT_Brain_FFPE_6p5mm",
+          "protocol_id": 1,
+          "field_index": 6033,
+          "start_yx_2um": [
+            2560,
+            256
+          ]
+        },
+        {
+          "sample": "WT_Brain_FFPE_6p5mm",
+          "protocol_id": 1,
+          "field_index": 24799,
+          "start_yx_2um": [
+            2688,
+            128
+          ]
+        },
+        {
+          "sample": "WT_Brain_FFPE_6p5mm",
+          "protocol_id": 1,
+          "field_index": 7389,
+          "start_yx_2um": [
+            2688,
+            256
+          ]
+        },
+        {
+          "sample": "WT_Brain_FFPE_6p5mm",
+          "protocol_id": 1,
+          "field_index": 30428,
+          "start_yx_2um": [
+            1664,
+            384
+          ]
+        },
+        {
+          "sample": "WT_Brain_FFPE_6p5mm",
+          "protocol_id": 1,
+          "field_index": 8413,
+          "start_yx_2um": [
+            1664,
+            512
+          ]
+        },
+        {
+          "sample": "WT_Brain_FFPE_6p5mm",
+          "protocol_id": 1,
+          "field_index": 17780,
+          "start_yx_2um": [
+            1792,
+            384
+          ]
+        },
+        {
+          "sample": "WT_Brain_FFPE_6p5mm",
+          "protocol_id": 1,
+          "field_index": 21509,
+          "start_yx_2um": [
+            1792,
+            512
+          ]
+        }
+      ]
+    },
+    "WT_Kidney_FFPE_6p5mm": {
+      "protocol_id": 1,
+      "source_fields": 46604,
+      "retained_fields": 45516,
+      "excluded_fields": 1088,
+      "block_origins_yx_2um": [
+        [
+          256,
+          2432
+        ],
+        [
+          1792,
+          1920
+        ]
+      ],
+      "training_indices": "training/geometry/WT_Kidney_FFPE_6p5mm_training_indices.npy",
+      "monitor_items": [
+        {
+          "sample": "WT_Kidney_FFPE_6p5mm",
+          "protocol_id": 1,
+          "field_index": 2150,
+          "start_yx_2um": [
+            256,
+            2432
+          ]
+        },
+        {
+          "sample": "WT_Kidney_FFPE_6p5mm",
+          "protocol_id": 1,
+          "field_index": 22373,
+          "start_yx_2um": [
+            256,
+            2560
+          ]
+        },
+        {
+          "sample": "WT_Kidney_FFPE_6p5mm",
+          "protocol_id": 1,
+          "field_index": 22486,
+          "start_yx_2um": [
+            384,
+            2432
+          ]
+        },
+        {
+          "sample": "WT_Kidney_FFPE_6p5mm",
+          "protocol_id": 1,
+          "field_index": 5821,
+          "start_yx_2um": [
+            384,
+            2560
+          ]
+        },
+        {
+          "sample": "WT_Kidney_FFPE_6p5mm",
+          "protocol_id": 1,
+          "field_index": 39696,
+          "start_yx_2um": [
+            1792,
+            1920
+          ]
+        },
+        {
+          "sample": "WT_Kidney_FFPE_6p5mm",
+          "protocol_id": 1,
+          "field_index": 15169,
+          "start_yx_2um": [
+            1792,
+            2048
+          ]
+        },
+        {
+          "sample": "WT_Kidney_FFPE_6p5mm",
+          "protocol_id": 1,
+          "field_index": 22763,
+          "start_yx_2um": [
+            1920,
+            1920
+          ]
+        },
+        {
+          "sample": "WT_Kidney_FFPE_6p5mm",
+          "protocol_id": 1,
+          "field_index": 25516,
+          "start_yx_2um": [
+            1920,
+            2048
+          ]
+        }
+      ]
+    },
+    "WT_Lymph_Node_FFPE_6p5mm": {
+      "protocol_id": 1,
+      "source_fields": 25066,
+      "retained_fields": 23558,
+      "excluded_fields": 1508,
+      "block_origins_yx_2um": [
+        [
+          640,
+          2816
+        ],
+        [
+          2688,
+          1408
+        ]
+      ],
+      "training_indices": "training/geometry/WT_Lymph_Node_FFPE_6p5mm_training_indices.npy",
+      "monitor_items": [
+        {
+          "sample": "WT_Lymph_Node_FFPE_6p5mm",
+          "protocol_id": 1,
+          "field_index": 503,
+          "start_yx_2um": [
+            640,
+            2816
+          ]
+        },
+        {
+          "sample": "WT_Lymph_Node_FFPE_6p5mm",
+          "protocol_id": 1,
+          "field_index": 16633,
+          "start_yx_2um": [
+            640,
+            2944
+          ]
+        },
+        {
+          "sample": "WT_Lymph_Node_FFPE_6p5mm",
+          "protocol_id": 1,
+          "field_index": 5131,
+          "start_yx_2um": [
+            768,
+            2816
+          ]
+        },
+        {
+          "sample": "WT_Lymph_Node_FFPE_6p5mm",
+          "protocol_id": 1,
+          "field_index": 18459,
+          "start_yx_2um": [
+            768,
+            2944
+          ]
+        },
+        {
+          "sample": "WT_Lymph_Node_FFPE_6p5mm",
+          "protocol_id": 1,
+          "field_index": 10107,
+          "start_yx_2um": [
+            2688,
+            1408
+          ]
+        },
+        {
+          "sample": "WT_Lymph_Node_FFPE_6p5mm",
+          "protocol_id": 1,
+          "field_index": 11546,
+          "start_yx_2um": [
+            2688,
+            1536
+          ]
+        },
+        {
+          "sample": "WT_Lymph_Node_FFPE_6p5mm",
+          "protocol_id": 1,
+          "field_index": 9034,
+          "start_yx_2um": [
+            2816,
+            1408
+          ]
+        },
+        {
+          "sample": "WT_Lymph_Node_FFPE_6p5mm",
+          "protocol_id": 1,
+          "field_index": 2059,
+          "start_yx_2um": [
+            2816,
+            1536
+          ]
+        }
+      ]
+    },
+    "WT_Prostate_FFPE_6p5mm": {
+      "protocol_id": 1,
+      "source_fields": 39181,
+      "retained_fields": 37646,
+      "excluded_fields": 1535,
+      "block_origins_yx_2um": [
+        [
+          2688,
+          1920
+        ],
+        [
+          1536,
+          640
+        ]
+      ],
+      "training_indices": "training/geometry/WT_Prostate_FFPE_6p5mm_training_indices.npy",
+      "monitor_items": [
+        {
+          "sample": "WT_Prostate_FFPE_6p5mm",
+          "protocol_id": 1,
+          "field_index": 14345,
+          "start_yx_2um": [
+            2688,
+            1920
+          ]
+        },
+        {
+          "sample": "WT_Prostate_FFPE_6p5mm",
+          "protocol_id": 1,
+          "field_index": 28271,
+          "start_yx_2um": [
+            2688,
+            2048
+          ]
+        },
+        {
+          "sample": "WT_Prostate_FFPE_6p5mm",
+          "protocol_id": 1,
+          "field_index": 25483,
+          "start_yx_2um": [
+            2816,
+            1920
+          ]
+        },
+        {
+          "sample": "WT_Prostate_FFPE_6p5mm",
+          "protocol_id": 1,
+          "field_index": 26507,
+          "start_yx_2um": [
+            2816,
+            2048
+          ]
+        },
+        {
+          "sample": "WT_Prostate_FFPE_6p5mm",
+          "protocol_id": 1,
+          "field_index": 17257,
+          "start_yx_2um": [
+            1536,
+            640
+          ]
+        },
+        {
+          "sample": "WT_Prostate_FFPE_6p5mm",
+          "protocol_id": 1,
+          "field_index": 38684,
+          "start_yx_2um": [
+            1536,
+            768
+          ]
+        },
+        {
+          "sample": "WT_Prostate_FFPE_6p5mm",
+          "protocol_id": 1,
+          "field_index": 5189,
+          "start_yx_2um": [
+            1664,
+            640
+          ]
+        },
+        {
+          "sample": "WT_Prostate_FFPE_6p5mm",
+          "protocol_id": 1,
+          "field_index": 18054,
+          "start_yx_2um": [
+            1664,
+            768
+          ]
+        }
+      ]
+    },
+    "WT_Breast_Fixed_Frozen_11mm": {
+      "protocol_id": 1,
+      "source_fields": 102966,
+      "retained_fields": 101451,
+      "excluded_fields": 1515,
+      "block_origins_yx_2um": [
+        [
+          4992,
+          3200
+        ],
+        [
+          3840,
+          640
+        ]
+      ],
+      "training_indices": "training/geometry/WT_Breast_Fixed_Frozen_11mm_training_indices.npy",
+      "monitor_items": [
+        {
+          "sample": "WT_Breast_Fixed_Frozen_11mm",
+          "protocol_id": 1,
+          "field_index": 89065,
+          "start_yx_2um": [
+            4992,
+            3200
+          ]
+        },
+        {
+          "sample": "WT_Breast_Fixed_Frozen_11mm",
+          "protocol_id": 1,
+          "field_index": 70596,
+          "start_yx_2um": [
+            4992,
+            3328
+          ]
+        },
+        {
+          "sample": "WT_Breast_Fixed_Frozen_11mm",
+          "protocol_id": 1,
+          "field_index": 3290,
+          "start_yx_2um": [
+            5120,
+            3200
+          ]
+        },
+        {
+          "sample": "WT_Breast_Fixed_Frozen_11mm",
+          "protocol_id": 1,
+          "field_index": 28031,
+          "start_yx_2um": [
+            5120,
+            3328
+          ]
+        },
+        {
+          "sample": "WT_Breast_Fixed_Frozen_11mm",
+          "protocol_id": 1,
+          "field_index": 87620,
+          "start_yx_2um": [
+            3840,
+            640
+          ]
+        },
+        {
+          "sample": "WT_Breast_Fixed_Frozen_11mm",
+          "protocol_id": 1,
+          "field_index": 48984,
+          "start_yx_2um": [
+            3840,
+            768
+          ]
+        },
+        {
+          "sample": "WT_Breast_Fixed_Frozen_11mm",
+          "protocol_id": 1,
+          "field_index": 33192,
+          "start_yx_2um": [
+            3968,
+            640
+          ]
+        },
+        {
+          "sample": "WT_Breast_Fixed_Frozen_11mm",
+          "protocol_id": 1,
+          "field_index": 26680,
+          "start_yx_2um": [
+            3968,
+            768
+          ]
+        }
+      ]
+    },
+    "HD3_Ovarian_Cancer": {
+      "protocol_id": 0,
+      "source_fields": 31638,
+      "retained_fields": 30805,
+      "excluded_fields": 833,
+      "block_origins_yx_2um": [
+        [
+          2432,
+          2048
+        ],
+        [
+          1536,
+          1280
+        ]
+      ],
+      "training_indices": "training/geometry/HD3_Ovarian_Cancer_training_indices.npy",
+      "monitor_items": [
+        {
+          "sample": "HD3_Ovarian_Cancer",
+          "protocol_id": 0,
+          "field_index": 8649,
+          "start_yx_2um": [
+            2432,
+            2048
+          ]
+        },
+        {
+          "sample": "HD3_Ovarian_Cancer",
+          "protocol_id": 0,
+          "field_index": 1415,
+          "start_yx_2um": [
+            2432,
+            2176
+          ]
+        },
+        {
+          "sample": "HD3_Ovarian_Cancer",
+          "protocol_id": 0,
+          "field_index": 2918,
+          "start_yx_2um": [
+            2560,
+            2048
+          ]
+        },
+        {
+          "sample": "HD3_Ovarian_Cancer",
+          "protocol_id": 0,
+          "field_index": 16120,
+          "start_yx_2um": [
+            2560,
+            2176
+          ]
+        },
+        {
+          "sample": "HD3_Ovarian_Cancer",
+          "protocol_id": 0,
+          "field_index": 16648,
+          "start_yx_2um": [
+            1536,
+            1280
+          ]
+        },
+        {
+          "sample": "HD3_Ovarian_Cancer",
+          "protocol_id": 0,
+          "field_index": 28433,
+          "start_yx_2um": [
+            1536,
+            1408
+          ]
+        },
+        {
+          "sample": "HD3_Ovarian_Cancer",
+          "protocol_id": 0,
+          "field_index": 26660,
+          "start_yx_2um": [
+            1664,
+            1280
+          ]
+        },
+        {
+          "sample": "HD3_Ovarian_Cancer",
+          "protocol_id": 0,
+          "field_index": 3206,
+          "start_yx_2um": [
+            1664,
+            1408
+          ]
+        }
+      ]
+    },
+    "HD3_Lymph_Node": {
+      "protocol_id": 0,
+      "source_fields": 28332,
+      "retained_fields": 27019,
+      "excluded_fields": 1313,
+      "block_origins_yx_2um": [
+        [
+          1920,
+          2432
+        ],
+        [
+          2816,
+          2304
+        ]
+      ],
+      "training_indices": "training/geometry/HD3_Lymph_Node_training_indices.npy",
+      "monitor_items": [
+        {
+          "sample": "HD3_Lymph_Node",
+          "protocol_id": 0,
+          "field_index": 27109,
+          "start_yx_2um": [
+            1920,
+            2432
+          ]
+        },
+        {
+          "sample": "HD3_Lymph_Node",
+          "protocol_id": 0,
+          "field_index": 898,
+          "start_yx_2um": [
+            1920,
+            2560
+          ]
+        },
+        {
+          "sample": "HD3_Lymph_Node",
+          "protocol_id": 0,
+          "field_index": 7228,
+          "start_yx_2um": [
+            2048,
+            2432
+          ]
+        },
+        {
+          "sample": "HD3_Lymph_Node",
+          "protocol_id": 0,
+          "field_index": 12963,
+          "start_yx_2um": [
+            2048,
+            2560
+          ]
+        },
+        {
+          "sample": "HD3_Lymph_Node",
+          "protocol_id": 0,
+          "field_index": 14601,
+          "start_yx_2um": [
+            2816,
+            2304
+          ]
+        },
+        {
+          "sample": "HD3_Lymph_Node",
+          "protocol_id": 0,
+          "field_index": 12045,
+          "start_yx_2um": [
+            2816,
+            2432
+          ]
+        },
+        {
+          "sample": "HD3_Lymph_Node",
+          "protocol_id": 0,
+          "field_index": 2946,
+          "start_yx_2um": [
+            2944,
+            2304
+          ]
+        },
+        {
+          "sample": "HD3_Lymph_Node",
+          "protocol_id": 0,
+          "field_index": 19088,
+          "start_yx_2um": [
+            2944,
+            2432
+          ]
+        }
+      ]
+    },
+    "HD3_Tonsil": {
+      "protocol_id": 0,
+      "source_fields": 38767,
+      "retained_fields": 36811,
+      "excluded_fields": 1956,
+      "block_origins_yx_2um": [
+        [
+          1664,
+          2688
+        ],
+        [
+          1664,
+          640
+        ]
+      ],
+      "training_indices": "training/geometry/HD3_Tonsil_training_indices.npy",
+      "monitor_items": [
+        {
+          "sample": "HD3_Tonsil",
+          "protocol_id": 0,
+          "field_index": 31591,
+          "start_yx_2um": [
+            1664,
+            2688
+          ]
+        },
+        {
+          "sample": "HD3_Tonsil",
+          "protocol_id": 0,
+          "field_index": 6433,
+          "start_yx_2um": [
+            1664,
+            2816
+          ]
+        },
+        {
+          "sample": "HD3_Tonsil",
+          "protocol_id": 0,
+          "field_index": 37993,
+          "start_yx_2um": [
+            1792,
+            2688
+          ]
+        },
+        {
+          "sample": "HD3_Tonsil",
+          "protocol_id": 0,
+          "field_index": 36854,
+          "start_yx_2um": [
+            1792,
+            2816
+          ]
+        },
+        {
+          "sample": "HD3_Tonsil",
+          "protocol_id": 0,
+          "field_index": 21298,
+          "start_yx_2um": [
+            1664,
+            640
+          ]
+        },
+        {
+          "sample": "HD3_Tonsil",
+          "protocol_id": 0,
+          "field_index": 23051,
+          "start_yx_2um": [
+            1664,
+            768
+          ]
+        },
+        {
+          "sample": "HD3_Tonsil",
+          "protocol_id": 0,
+          "field_index": 21692,
+          "start_yx_2um": [
+            1792,
+            640
+          ]
+        },
+        {
+          "sample": "HD3_Tonsil",
+          "protocol_id": 0,
+          "field_index": 9909,
+          "start_yx_2um": [
+            1792,
+            768
+          ]
+        }
+      ]
+    }
+  }
+}

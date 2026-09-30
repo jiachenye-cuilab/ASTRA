@@ -1,0 +1,12 @@
+{
+  "sample_id": "my-visium-section",
+  "protocol_id": 0,
+  "diameter_um": 55,
+  "pitch_um": 100,
+  "matrix_h5": "../data/filtered_feature_bc_matrix.h5",
+  "positions_csv": "../data/tissue_positions.csv",
+  "capture_shape_yx_2um": [3000, 3000],
+  "spot_to_image": [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]],
+  "tissue_image": "../data/registered_he.tif",
+  "uni_checkpoint": "../weights/pytorch_model.bin"
+}
