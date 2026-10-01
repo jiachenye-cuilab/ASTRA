@@ -10,7 +10,7 @@ from astra.model.segment import SegmentLayout
 def pool_segment_mass(values_2um: torch.Tensor, layout: SegmentLayout) -> torch.Tensor:
     values = torch.as_tensor(values_2um)
     if values.ndim != 4 or values.shape[:3] != layout.cell_to_segment.shape:
-        raise ValueError("v016 marginal field/layout shape differs")
+        raise ValueError("ASTRA marginal field/layout shape differs")
     selected = (
         values.reshape(-1, values.shape[-1])
         .index_select(0, layout.valid_cell_indices)

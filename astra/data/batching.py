@@ -69,8 +69,8 @@ def prefetched_batches(requests, prepare_cpu, encode, *, enabled=True, pipeline=
     if prefetch_stream is not None:
         # Pre-created GPU masks belong to the main stream.
         prefetch_stream.wait_stream(main_stream)
-    cpu_worker = ThreadPoolExecutor(max_workers=1, thread_name_prefix="v033_cpu") if enabled else None
-    gpu_worker = ThreadPoolExecutor(max_workers=1, thread_name_prefix="v033_gpu") if use_device else None
+    cpu_worker = ThreadPoolExecutor(max_workers=1, thread_name_prefix="astra_cpu") if enabled else None
+    gpu_worker = ThreadPoolExecutor(max_workers=1, thread_name_prefix="astra_gpu") if use_device else None
     cpu_pending = None
     sentinel = object()
 

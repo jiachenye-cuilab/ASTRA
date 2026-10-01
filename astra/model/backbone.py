@@ -95,7 +95,7 @@ class Direct8Model(PreviousModel):
                 or field_valid.shape != owner.shape or field_valid.dtype != torch.bool
                 or image.shape[0] != owner.shape[0]
                 or any(x.device != owner.device for x in (counts, parent_valid, field_valid, image))):
-            raise ValueError("v029 observation shapes, dtypes or devices differ")
+            raise ValueError("ASTRA observation shapes, dtypes or devices differ")
         ids = ProtocolModel._protocol_ids(protocol_id, batch_size=owner.shape[0], device=owner.device)
         if available is None:
             available = torch.ones((owner.shape[0], input_genes), dtype=torch.bool, device=owner.device)

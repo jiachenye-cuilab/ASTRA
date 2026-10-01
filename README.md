@@ -167,8 +167,8 @@ the [image guide](docs/image-inputs.md). Synthetic adapter tests do not establis
 biological validity for every platform. Full raw-data/GPU benchmarks, cohort
 analyses, complete training and adaptation runs are not covered by CPU smoke
 tests. Downstream statistical analyses and paper plotting assets are not part
-of this method package; complete paper figure/script correspondence remains
-to be verified. Adjacent sections are not identical-location ground truth.
+of this method package. Adjacent sections are not identical-location ground
+truth.
 
 ## License
 
@@ -176,4 +176,4 @@ Code and documentation use the [MIT License](LICENSE). Datasets, dependencies,
 UNI and model-derived assets have their own terms; MIT does not replace them.
 Raw datasets and gated UNI weights are not distributed or downloaded by ASTRA.
 See the [asset licensing inventory](docs/reproducibility.md#acquisition-and-licensing)
-for acquisition requirements and the pending asset-rights confirmation.
+for asset provenance, acquisition requirements and applicable upstream terms.

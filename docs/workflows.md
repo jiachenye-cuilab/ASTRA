@@ -45,9 +45,16 @@ The fixed six tests are:
 | `WT_Colon_FFPE_6p5mm` | 1 |
 | `WT_Pancreas_FFPE_6p5mm_v4p0p1` | 1 |
 
-Their official sources and processing versions are in [datasets.md](datasets.md)
-and [resource.json](../resource.json). WT Lung is excluded. Repeat the following
-for each section with its own edited config and fresh output directory:
+Their official sources, processing versions and download instructions are in
+[datasets.md](datasets.md#fixed-testing-6-sections); exact filenames and local
+destinations are in [resource.json](../resource.json). Set `sample_id` to the
+resource ID and `protocol_id` as listed above. Copy that resource's
+`feature_slice` and `tissue_image` paths into the benchmark config: registry
+paths are relative to the repository root, while config paths are relative to
+the config file (prefix registry paths with `../` for configs in `configs/`).
+The CLI uses these explicit paths; it does not resolve `sample_id` through the
+registry. Repeat the following for each section with its own edited config and
+fresh output directory:
 
 ```bash
 python -m astra prepare-benchmark --config configs/benchmark_hd16.json --output outputs/hd16-data
@@ -112,14 +119,11 @@ python -m astra predict-section --inputs outputs/visium-inputs --output outputs/
 ```
 
 Default query centers lie within 100 µm of a retained observed spot. Optional
-`tissue_mask_2um` requires at least 8/16 tissue subcells in an 8 µm bin. For
-paper-specific native all-spot Voronoi/capture support and tissue/QC criteria,
-supply the frozen `query_yx_8um` NPY instead of deriving the default support.
-The ILC paper protocol additionally uses >200 detected genes and Hole/Artefact/Out
-fraction <0.3. Those annotations and the 43-patient support/registration assets
-are not supplied or recomputed here. Native NDPI decoding is not claimed;
-use a calibrated, pixel-preserving RGB8 tiled TIFF satisfying the
-[decoder contract](image-inputs.md), with the corresponding registration.
+`tissue_mask_2um` requires at least 8/16 tissue subcells in an 8 µm bin.
+To supply a predefined support, set `query_yx_8um` to its NPY array.
+Native NDPI decoding is not claimed; use a calibrated, pixel-preserving RGB8
+tiled TIFF satisfying the [decoder contract](image-inputs.md), with the
+corresponding registration.
 
 ## Old ST / ST-TNBC: 100 µm circles and nine FOVs
 
@@ -130,7 +134,7 @@ and author-specific image refinement are acquisition-specific preparation
 steps; this package does not silently infer them. Use the same refined original
 image registration for counts, centers, tissue mask and H&E.
 
-The adapter implements the existing ST-TNBC protocol: 100 µm capture diameter,
+The ST100 adapter uses 100 µm capture diameter,
 150 µm nominal pitch, 3′ protocol 0, frozen raw ASTRA. Each spot center is rounded
 to the nearest multiple of 8 µm for **FOV placement only**; the observation
 operator still uses the supplied unrounded center. Each anchor has one central
@@ -150,16 +154,14 @@ The direct output is `[N,2000]` raw inferred counts on the union of all central
 `xy_um.npy`, `query_coverage.npy`, gene availability, `query_parent.npy` and
 `query_spot_area_2um.npy` accompany it. Parent −1 is outside capture circles;
 −2 denotes ambiguous circle ownership. Area is the number of in-circle native
-2 µm centers (0–16), not continuous circle/square intersection area. Primary
-complete-circle analysis also requires that the farthest square corner lie
-inside the continuous circle; area=16 alone does not establish that condition.
+2 µm centers (0–16), not continuous circle/square intersection area.
 
 Optional `tissue_mask_8um` is a boolean NPY in the complete capture frame. It
-enables the paper's four-neighbor inverse-distance-squared gap interpolation
+enables four-neighbor inverse-distance-squared gap interpolation
 up to 32 µm, retaining only tissue paths sampled at 1/4,1/2,3/4. Interpolated
 counts and coordinates are separate files; `prediction_source.npy` labels
 0=unsupported, 1=direct, 2=interpolated. Without a tissue mask no gap interpolation
-occurs. Exclude interpolated counts from primary direct-bin analyses.
+occurs.
 
 Single-field allocation preserves each anchor count over its discretized
 circle. The final averaged grid generally does **not** preserve that spot sum.
@@ -167,15 +169,14 @@ circle. The final averaged grid generally does **not** preserve that spot sum.
 reaggregation of the **saved** direct grid using raster-area fractions. It is
 an approximate grid representation, not a rescaled prediction or exact
 continuous-circle integral. [Conservation scopes](conservation.md) apply with
-100 µm replacing 55 µm. The per-FOV scaled FP32 threshold is `5e-6`, retained
-from the current cohort FP32 implementation. The independent saved-mean test
-uses the cohort's `atol=1e-5` UMI and `rtol=3e-6`: at most nine FP32 additions
+100 µm replacing 55 µm. The per-FOV scaled FP32 threshold is `5e-6`. The
+independent saved-mean test uses `atol=1e-5` UMI and `rtol=3e-6`: at most nine FP32 additions
 give a relative summation bound of about `9.54e-7`, with the remaining margin
 covering the existing FP32 forward/batching comparison. These tolerances do
 not make a final-grid conservation assertion. There is no ST100 fine-tuning
 protocol in this release.
-Synthetic geometry/cache/FP32/export tests verify this adapter; raw UNI,
-original cohort files and the 92-patient downstream analysis have not been rerun.
+Synthetic geometry/cache/FP32/export tests verify this adapter; raw UNI
+extraction and full raw-data cohort inference have not been rerun.
 
 ## Compatible raw-image cache
 
@@ -202,7 +203,8 @@ Portable tests explicitly use synthetic density and zero features, **not UNI**.
 [User training](training.md#train-on-your-own-visium-hd) uses `configure-training`
 and an explicit writable workspace while running from the source checkout.
 It preserves the published gene panel's original fitting provenance, spatial
-holdout, differentiable FP32 forward and existing loss/optimizer/selection.
+holdout and existing loss/optimizer/selection. Training uses FP32 parameters
+with FP64 count allocation, predictions and loss.
 
 [Fine-tuning](fine-tuning.md) remains available for HD16 and Spot55 prepared
 coarse caches with disjoint support/selection FOVs. Fine labels in a benchmark

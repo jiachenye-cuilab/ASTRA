@@ -67,7 +67,7 @@
   },
   "fit_boundaries": {
     "cv_preprocessing_fit": "current_fold_nine_training_sections_and_training_regions_only",
-    "cv_model_initialization": "from_scratch_no_previous_SRNO_checkpoint",
+    "cv_model_initialization": "from_scratch_no_pretrained_ASTRA_weights",
     "reinhard_reference_if_enabled": "current_fold_training_sections_only",
     "reinhard_source_statistics_if_enabled": "each_section_own_HE_only_no_fine_expression",
     "test_fine_expression_use": "evaluation_only_after_final_model_is_locked",

@@ -16,7 +16,12 @@ Single-FOV fields and coordinate conventions are documented
 in [input preparation API](../astra/data/preparation.py). H&E preprocessing uses the original
 colors without Reinhard normalization. Integrals of optical density and
 hematoxylin/eosin density must be computed from the original pixels, not from
-downsampled RGB. Counts are reordered using
+downsampled RGB. Use finite, nonnegative raw integer UMI counts, without CPM/TPM
+normalization or a log transform. Integer-valued floating-point storage is
+accepted on input; fractional values are rejected, not rounded. Preparation and
+loading validate the count range and convert counts to `int64`, matching the
+benchmark coarse-count caches. Inference and fine-tuning convert counts to FP32
+for model computation and keep predictions in FP32. Counts are reordered using
 [model/input_gene_ids.json](../model/input_gene_ids.json), and missing genes are
 marked unavailable.
 
@@ -28,7 +33,7 @@ If your NPZ already contains compatible frozen UNI features, omit
 
 | Field | Shape and type |
 | --- | --- |
-| `parent_counts` | `[P,2000]`, raw nonnegative counts |
+| `parent_counts` | `[P,2000]`, int64 raw nonnegative UMI counts; integer-valued floating-point input is converted on load |
 | `gene_ids`, `gene_available` | Ordered `[2000]` Unicode strings, `[2000]` bool |
 | `owner_map` | `[128,128]` int64; `-1` denotes an unobserved gap |
 | `parent_valid`, `field_valid` | `[P]` bool, `[128,128]` bool |

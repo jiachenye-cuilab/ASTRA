@@ -39,8 +39,8 @@ def validate_config(config):
             "validation_plateau", "constant_after_warmup", "warmup_cosine_over_actual_optimizer_steps"):
         raise ValueError("unknown learning-rate schedule")
     validate_loss_config(settings.get("training_loss"))
-    if config.get("model_family", "v033") not in ("v030", "v033"):
-        raise ValueError("model_family must be v030 or v033")
+    if config.get("model_family", "v033") not in ("ASTRA", "v030", "v033"):
+        raise ValueError("model_family must identify the published ASTRA architecture")
     warmup_clock(settings)
     milestones = settings.get("milestone_epochs", [])
     if (not isinstance(milestones, list) or len(set(milestones)) != len(milestones)
@@ -513,10 +513,15 @@ def full_batch_smoke_items(items, config):
 
 
 def resume_config_matches(previous, current):
-    """Only an explicit increase of the epoch budget may change on resume."""
+    """Require the same execution settings apart from an increased epoch budget."""
     previous, current = deepcopy(previous), deepcopy(current)
     for config in (previous, current):
         config.setdefault("model_family", "v033")
+        if config["model_family"] == "ASTRA":
+            config["model_family"] = "v030"
+        # Descriptive labels may change; execution flags and panel settings remain checked.
+        for key in ("initialization", "panel", "formal_training"):
+            config.get("boundaries", {}).pop(key, None)
         config["training"].setdefault("warmup_clock", "optimizer_updates")
         if "model" in config and config["model_family"] == "v033":
             config["model"].setdefault("allocation_post_center_norm", "layernorm")
@@ -526,7 +531,7 @@ def resume_config_matches(previous, current):
 
 
 def configuration_version(config_path):
-    """Allow v030-family rounds to share the verified twelve-section runner."""
+    """Identify the published ASTRA architecture used by the training runner."""
     if not Path(config_path).resolve().is_relative_to(ROOT / "training"):
         raise ValueError("keep task configurations under ASTRA/training")
     return "v030"
@@ -540,8 +545,8 @@ def run(config_path, *, output=None, smoke=False, resume=None, device=None, full
     config_path = Path(config_path).resolve()
     version = configuration_version(config_path)
     config = read_json(config_path)
-    if version == "v030" and config.get("model_family") != "v030":
-        raise ValueError("v030 round configurations must select the v030 model family")
+    if version == "v030" and config.get("model_family") not in ("ASTRA", "v030"):
+        raise ValueError("training configurations must select the ASTRA model family")
     panels, budgets = validate_config(config)
     settings = config["training"]
     if not short_run and not settings["formal_training"]:

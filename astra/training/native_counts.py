@@ -26,7 +26,7 @@ def _point_slots(group, lookup, block_columns):
     return rows, columns, np.flatnonzero(lookup[(rows // 256) * block_columns + columns // 256] >= 0)
 
 def stage_counts(root, record, gene_ids, blocks, shape):
-    """v027 sparse-block layout; feature availability now follows actual protocol."""
+    """Native sparse-block layout with assay-specific feature availability."""
     table = feature_table(record["feature_slice"], record["protocol"])
     sources = [table[gene][0] if gene in table else -1 for gene in gene_ids]
     block_columns = (shape[1] + 255) // 256

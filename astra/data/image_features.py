@@ -25,7 +25,7 @@ def image_features_from_raw(
         or relative_log_epsilon <= 0
         or relative_log_clip <= 0
     ):
-        raise ValueError("v012 raw H&E feature tensors differ")
+        raise ValueError("ASTRA raw H&E feature tensors differ")
     weight = area.to(dtype=torch.float64) / float(valid_area_scale)
     denominator = weight.sum(dim=(1, 2)).clamp_min(torch.finfo(torch.float64).tiny)
     mean = (

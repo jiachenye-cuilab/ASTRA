@@ -50,10 +50,11 @@ The configurable manifest budget fields are `seed`, `max_epochs`, `batch_size`,
 `learning_rate`, `gradient_accumulation_steps`, and `fields_per_section`. Without
 an explicit field quota, each section uses up to 100 distinct retained training
 FOVs per epoch; smaller pools are recorded as section overrides. An explicit
-quota larger than the retained pool is rejected. The loss, differentiable FP32
-model, observation generation, optimizer family and joint spatial HD16/Spot55
-selection remain the existing implementation. Inference's no-grad/in-place
-forward is not used for backpropagation.
+quota larger than the retained pool is rejected. Training uses FP32 parameters,
+gradients and optimizer state; count allocation, predictions and loss use FP64.
+Observation generation, optimizer family and joint spatial HD16/Spot55 selection
+remain unchanged. Inference's no-grad/in-place forward is not used for
+backpropagation.
 
 This route initializes from scratch with the **published fixed 2,000-gene panel**.
 It does not fit a new panel on your data; the original nine-section fitting
@@ -78,6 +79,9 @@ files, registered H&E TIFF/BTF images, and UNI1 weights under their applicable
 terms. These data and external weights are not distributed with ASTRA. The
 included inference examples do not contain the measured fine-scale labels
 required for training.
+
+The [training dataset table](datasets.md#final-training-12-development-sections)
+lists the official download pages and processing versions for each section.
 
 `resource.json` defaults to `data/<resource_id>/` for datasets and
 `weights/UNI/pytorch_model.bin` for UNI. Use the specified filenames and processing

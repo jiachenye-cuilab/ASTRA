@@ -1,3 +1,0 @@
-# Repository settings are unnecessary in standalone distribution archives.
-/.gitattributes export-ignore
-/.gitignore export-ignore

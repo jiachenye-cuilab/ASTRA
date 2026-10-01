@@ -26,11 +26,19 @@ def load_input(path, gene_ids, *, keys=None):
         raise ValueError("owner_map and protocol_id must be int64")
     if int(data["protocol_id"]) not in (0, 1):
         raise ValueError("protocol_id must be 0 (3prime) or 1 (WT), independently of geometry")
+    counts = data["parent_counts"]
+    if counts.dtype.kind not in "iuf":
+        raise ValueError("parent_counts must contain real numeric counts")
     for key in ("parent_counts", "image_features_2um"):
         if not np.isfinite(data[key]).all():
             raise ValueError(f"{key} contains nonfinite values")
-    if (data["parent_counts"] < 0).any() or not data["gene_available"].any():
+    if (counts < 0).any() or not data["gene_available"].any():
         raise ValueError("counts must be nonnegative and at least one input gene must be measured")
+    if not np.equal(counts, np.round(counts)).all():
+        raise ValueError("parent_counts must contain raw integer UMI counts")
+    if np.any(counts >= np.iinfo(np.int64).max):
+        raise ValueError("parent_counts exceed the supported int64 count range")
+    data["parent_counts"] = counts.astype(np.int64, copy=False)
     return data
 
 

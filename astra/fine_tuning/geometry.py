@@ -16,7 +16,7 @@ def masks_to_owner(
     if squeeze:
         value = value.unsqueeze(0)
     if value.ndim != 4 or value.dtype != torch.bool:
-        raise TypeError("v033 masks must be bool [batch,parents,rows,columns]")
+        raise TypeError("ASTRA masks must be bool [batch,parents,rows,columns]")
     batch, parents, rows, columns = value.shape
     valid_field = (
         torch.ones((batch, rows, columns), dtype=torch.bool, device=value.device)
@@ -24,9 +24,9 @@ def masks_to_owner(
         else _spatial_valid(field_valid, (batch, rows, columns))
     )
     if bool(torch.any(value.sum(dim=1) > 1)):
-        raise ValueError("v033 parent masks overlap")
+        raise ValueError("ASTRA parent masks overlap")
     if bool(torch.any(value & ~valid_field[:, None])):
-        raise ValueError("v033 parent mask includes invalid field cells")
+        raise ValueError("ASTRA parent mask includes invalid field cells")
     parent_valid = value.flatten(2).any(dim=-1)
     ids = torch.arange(parents, dtype=torch.long, device=value.device)
     owner = torch.where(
@@ -72,12 +72,12 @@ def axis_aligned_square_owner(
     side = float(side_um)
     phase_y, phase_x = (float(value) for value in phase_um)
     if side <= 0 or cell_um <= 0 or not 0 <= phase_y < side or not 0 <= phase_x < side:
-        raise ValueError("v033 square side/phase differs")
+        raise ValueError("ASTRA square side/phase differs")
     fov_y, fov_x = rows * cell_um, columns * cell_um
     starts_y = torch.arange(phase_y, fov_y - side + 1e-12, side, dtype=torch.float64)
     starts_x = torch.arange(phase_x, fov_x - side + 1e-12, side, dtype=torch.float64)
     if starts_y.numel() == 0 or starts_x.numel() == 0:
-        raise ValueError("v033 phased square program has no full parent")
+        raise ValueError("ASTRA phased square program has no full parent")
     yy = (torch.arange(rows, dtype=torch.float64) + 0.5) * cell_um
     xx = (torch.arange(columns, dtype=torch.float64) + 0.5) * cell_um
     masks = []

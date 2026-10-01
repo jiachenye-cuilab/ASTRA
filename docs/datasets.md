@@ -8,6 +8,9 @@ fine-tuned weights are not distributed with the package. Base-model training
 code, the frozen gene panel, FOV coordinates and spatial splits are included;
 see [Training guide](training.md).
 
+Cohort-specific preprocessing, sample selection and statistical analyses are
+described in the accompanying paper.
+
 ## Overview
 
 | Dataset | Size and unit | Role |
@@ -30,25 +33,29 @@ not be counted as independent patients.
 
 ### Final training: 12 development sections
 
-Data come from [10x Genomics public datasets](https://www.10xgenomics.com/datasets).
-Use the specified Space Ranger 4 inputs; another processing version of the same
-section is not an additional sample. All sections have human tissue H&E images
-and native high-resolution expression data.
+Data come from the 10x Genomics pages linked below. Use the listed Space Ranger
+versions; another processing version of the same section is not an additional
+sample. All sections have human tissue H&E images and native high-resolution
+expression data.
 
-| Resource ID | Tissue and preservation | Cross-validation fold |
-| --- | --- | --- |
-| `WT_Colon_FF_11mm` | Colon cancer, FF, 11 mm | fold2 |
-| `WT_Brain_FFPE_6p5mm` | Brain cancer, FFPE, 6.5 mm | fold2 |
-| `WT_Kidney_FFPE_6p5mm` | Kidney, FFPE, 6.5 mm; default SR 4.0.1 | fold3 |
-| `WT_Lymph_Node_FFPE_6p5mm` | Lymph node, FFPE, 6.5 mm; default SR 4.0.1 | fold3 |
-| `WT_Prostate_FFPE_6p5mm` | Prostate cancer, FFPE, 6.5 mm | fold4 |
-| `WT_Breast_Fixed_Frozen_11mm` | Breast cancer, fixed frozen, 11 mm | fold4 |
-| `WT_Heart_FFPE_6p5mm` | Heart, FFPE, 6.5 mm | fold1 |
-| `WT_Pancreas_FFPE_11mm` | Pancreas, FFPE, 11 mm | fold1 |
-| `HD3_Ovarian_Cancer` | Ovarian cancer, HD 3′, FF | fold2 |
-| `HD3_Lymph_Node` | Lymph node, HD 3′, FF | fold3 |
-| `HD3_Tonsil` | Tonsil, HD 3′, FF | fold4 |
-| `HD3_Pancreatic_Cancer` | Pancreatic cancer, HD 3′, FF | fold1 |
+| Resource ID | Tissue and preservation | Cross-validation fold | Space Ranger | Official source |
+| --- | --- | --- | --- | --- |
+| `WT_Colon_FF_11mm` | Colon cancer, FF, 11 mm | fold2 | 4.1.0 | [10x Genomics](https://www.10xgenomics.com/datasets/visium-hd-cytassist-11mm-human-colon-cancer-HE) |
+| `WT_Brain_FFPE_6p5mm` | Brain cancer, FFPE, 6.5 mm | fold2 | 4.1.0 | [10x Genomics](https://www.10xgenomics.com/datasets/visium-hd-cytassist-6p5mm-human-brain-cancer) |
+| `WT_Kidney_FFPE_6p5mm` | Kidney, FFPE, 6.5 mm | fold3 | 4.0.1 | [10x Genomics](https://www.10xgenomics.com/datasets/visium-hd-cytassist-gene-expression-libraries-human-kidney-ffpe-v4) |
+| `WT_Lymph_Node_FFPE_6p5mm` | Lymph node, FFPE, 6.5 mm | fold3 | 4.0.1 | [10x Genomics](https://www.10xgenomics.com/datasets/visium-hd-cytassist-gene-expression-libraries-human-lymph-node-v4) |
+| `WT_Prostate_FFPE_6p5mm` | Prostate cancer, FFPE, 6.5 mm | fold4 | 4.0.1 | [10x Genomics](https://www.10xgenomics.com/datasets/visium-hd-cytassist-gene-expression-libraries-human-prostate-cancer-ffpe) |
+| `WT_Breast_Fixed_Frozen_11mm` | Breast cancer, fixed frozen, 11 mm | fold4 | 4.1.0 | [10x Genomics](https://www.10xgenomics.com/datasets/visium-hd-cytassist-11mm-human-breast-cancer) |
+| `WT_Heart_FFPE_6p5mm` | Heart, FFPE, 6.5 mm | fold1 | 4.1.0 | [10x Genomics](https://www.10xgenomics.com/datasets/visium-hd-cytassist-6p5mm-human-heart) |
+| `WT_Pancreas_FFPE_11mm` | Pancreas, FFPE, 11 mm | fold1 | 4.1.0 | [10x Genomics](https://www.10xgenomics.com/datasets/visium-hd-cytassist-11mm-human-pancreas) |
+| `HD3_Ovarian_Cancer` | Ovarian cancer, HD 3′, FF | fold2 | 4.0.1 | [10x Genomics](https://www.10xgenomics.com/datasets/visium-hd-three-prime-ovarian-cancer-fresh-frozen) |
+| `HD3_Lymph_Node` | Lymph node, HD 3′, FF | fold3 | 4.1.0 | [10x Genomics](https://www.10xgenomics.com/datasets/visium-hd-three-prime-human-lymph-node-fresh-frozen) |
+| `HD3_Tonsil` | Tonsil, HD 3′, FF | fold4 | 4.1.0 | [10x Genomics](https://www.10xgenomics.com/datasets/visium-hd-three-prime-human-tonsil-fresh-frozen) |
+| `HD3_Pancreatic_Cancer` | Pancreatic cancer, HD 3′, FF | fold1 | 4.0.1 | [10x Genomics](https://www.10xgenomics.com/datasets/visium-hd-three-prime-human-pancreatic-cancer-fresh-frozen) |
+
+Download **Feature Slice H5** from **Output and supplemental files** and the
+original full-resolution H&E `tissue_image` from **Input files**. Keep the provider
+filenames and use the repository-relative paths in [resource.json](../resource.json).
 
 The [dataset split](../training/dataset_split.json) defines four folds. Each fold
 holds out the corresponding 3 sections (2 WT and 1 HD 3′) and trains on the other
@@ -66,14 +73,23 @@ regions use random geometry; HD16 and Spot55 are used for validation.
 
 ### Fixed testing: 6 sections
 
-| Resource ID | Tissue and technology | Source group |
-| --- | --- | --- |
-| `WT_Ovarian_FF_6p5mm` | Ovarian cancer, WT, FF, 6.5 mm | Adjacent ovarian sections |
-| `HD3_Ovarian_Cancer_FF` | Ovarian cancer, HD 3′, FF | Same group as the preceding row |
-| `WT_Breast_FF_Ultima` | Breast cancer, WT, FF, Ultima sequencing | Breast Ultima |
-| `WT_Colorectal_FFPE_6p5mm` | CRC P2, WT, FFPE; default SR 4.0.1 | Human_CRC_P2 |
-| `WT_Colon_FFPE_6p5mm` | Colon cancer, WT, FFPE, 6.5 mm | Colon FFPE |
-| `WT_Pancreas_FFPE_6p5mm_v4p0p1` | Pancreas, WT, FFPE, 6.5 mm; SR 4.0.1 | Pancreas FFPE |
+| Resource ID | Tissue and technology | Source group | Space Ranger | Official source |
+| --- | --- | --- | --- | --- |
+| `WT_Ovarian_FF_6p5mm` | Ovarian cancer, WT, FF, 6.5 mm | Adjacent ovarian sections | 4.0.1 | [10x Genomics](https://www.10xgenomics.com/datasets/visium-hd-cytassist-gene-expression-ovarian-cancer-discovery-fresh-frozen) |
+| `HD3_Ovarian_Cancer_FF` | Ovarian cancer, HD 3′, FF | Same group as the preceding row | 4.0.1 | [10x Genomics](https://www.10xgenomics.com/datasets/visium-hd-three-prime-ovarian-cancer-discovery-fresh-frozen) |
+| `WT_Breast_FF_Ultima` | Breast cancer, WT, FF, Ultima sequencing | Breast Ultima | 4.0.1 | [10x Genomics](https://www.10xgenomics.com/datasets/visium-hd-cytassist-gene-expression-libraries-human-breast-cancer-ff-ultima-4) |
+| `WT_Colorectal_FFPE_6p5mm` | CRC P2, WT, FFPE | Human_CRC_P2 | 4.0.1 | [10x Genomics](https://www.10xgenomics.com/datasets/visium-hd-cytassist-gene-expression-libraries-of-human-crc-v4) |
+| `WT_Colon_FFPE_6p5mm` | Colon cancer, WT, FFPE, 6.5 mm | Colon FFPE | 4.1.0 | [10x Genomics](https://www.10xgenomics.com/datasets/visium-hd-cytassist-6p5mm-human-colon-cancer) |
+| `WT_Pancreas_FFPE_6p5mm_v4p0p1` | Pancreas, WT, FFPE, 6.5 mm | Pancreas FFPE | 4.0.1 | [10x Genomics](https://www.10xgenomics.com/datasets/visium-hd-cytassist-gene-expression-libraries-human-pancreas-4) |
+
+For each section, use its official source and the Space Ranger version listed
+above. Download the native **Feature Slice H5** from **Output and supplemental
+files** and the original full-resolution H&E `tissue_image` from **Input files**.
+For both ovarian sections, select the deeply sequenced dataset rather than the
+minimum-depth alternative. Keep the provider filenames and place the files at
+the corresponding `feature_slice` and `tissue_image` paths in
+[resource.json](../resource.json). These paths are relative to the repository
+root; the raw files are not bundled.
 
 The two ovarian test sections are [adjacent sections from one source](https://www.10xgenomics.com/datasets/visium-hd-cytassist-gene-expression-ovarian-cancer-discovery-fresh-frozen),
 from a different donor than the [training ovarian section](https://www.10xgenomics.com/datasets/visium-hd-three-prime-ovarian-cancer-fresh-frozen).
@@ -112,109 +128,35 @@ The `ILC_Visium` collection contains **43 distinct patients with primary ILC,
 one section per patient**, profiled with fresh-frozen Visium: 55 µm spot diameter
 and 100 µm center-to-center spacing.
 
-Sample identifiers:
-
-```text
-ST1 ST3 ST5 ST7 ST33 ST34 ST35 ST36 ST37 ST38 ST39
-ST40 ST41 ST42 ST43 ST44 ST45 ST46 ST47 ST48 ST50
-ST51 ST52 ST53 ST54 ST55 ST56 ST57 ST58 ST59 ST60
-ST61 ST62 ST63 ST64 ST65 ST66 ST67 ST68 ST69 ST70 ST71 ST72
-```
-
-Inputs include Space Ranger counts, spot coordinates and scale factors, original
-NDPI H&E, the authors' region annotations, `STutility_object.RDS`, and the
-clinical supplementary table `pnas.2517567123.sd01.xlsx`. Downstream analysis
-uses 71,997 spots retained by the authors' quality control (QC), together with
-their CARD cell-composition estimates and other annotations. Missing tumor-region
-annotations in ST54/ST56 exclude those samples only from the corresponding
-tumor-interface analysis, not from the entire cohort.
-
-This cohort is not used for ASTRA base-model training or selection. ILC analysis
-uses the frozen pretrained ASTRA model. Native 8 µm RNA ground truth is
-unavailable; 8 µm outputs are predictions. Regional, cell-composition and
-clinical associations provide downstream evidence, not direct validation of
-reconstruction accuracy at individual bins.
+This cohort is not used for ASTRA base-model training or selection. It has no
+native 8 µm RNA ground truth; the model's 8 µm outputs are predictions.
 
 ## Downstream CRC cohort
 
 Sources: [10x Human CRC multiplatform cohort](https://www.10xgenomics.com/platforms/visium/product-family/dataset-human-crc)
 and [the authors' analyses and annotations](https://github.com/10XGenomics/HumanColonCancer_VisiumHD).
-The tissues are FFPE. Serial sections from the same donor across assays are
-grouped by patient.
+The FFPE datasets include Visium HD WT, measured Visium CytAssist v2,
+[Xenium](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE280314) and
+[Chromium Flex](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE280311).
 
-| Platform | Resource ID or sample | Role |
-| --- | --- | --- |
-| Visium HD WT | `WT_CRC_P1_FFPE`, `WT_Colorectal_FFPE_6p5mm` (P2), `WT_CRC_P5_FFPE` | P1/P2/P5 tumors; P2 also belongs to the base-model fixed test set |
-| Visium HD WT | `WT_CRC_P3_NAT_FFPE`, `WT_CRC_P5_NAT_FFPE` | P3/P5 normal adjacent tissue |
-| Measured Visium CytAssist v2 | `Visium_CRC_P2_FFPE`, `Visium_CRC_P3_NAT_FFPE`, `Visium_CRC_P5_NAT_FFPE` | 55 µm spots at 100 µm spacing; 4,269, 3,887 and 2,638 tissue spots, respectively |
-| Xenium | `Xenium_CRC_P1_FFPE`, `Xenium_CRC_P2_FFPE`, `Xenium_CRC_P5_FFPE` | Targeted expression and cell/nuclear segmentation in P1/P2/P5 serial sections; [GSE280314](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE280314) |
-| Chromium Flex | `CRC_Flex_SingleCell_Metadata` | Single-cell expression and the authors' annotations; [GSE280311](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE280311) |
-
-Flex includes `P1CRC`, `P2CRC`, `P3CRC`, `P4CRC`, `P5CRC`, `P2NAT`, `P3NAT` and
-`P5NAT`. The input matrix contains 279,609 cells and 18,082 genes; the authors'
-QC retains 260,506 cells. Exclude the target donor when constructing a reference
-from other donors; overlapping reference and target data are not independent
-validation.
-
-The default P2 HD input uses [Space Ranger 4.0.1](https://www.10xgenomics.com/datasets/visium-hd-cytassist-gene-expression-libraries-of-human-crc-v4).
-The authors' SR 3.0.0 spatial annotations and [SpaceHack pathology-region and
-nuclear annotations](https://zenodo.org/records/11402686) concern the same P2
-data. Check coordinate versions before use; these annotations incorporate H&E
-and expression-marker information. The authors' earlier Xenium metadata must
-not be joined directly to newer Xenium outputs by cell ID.
-
-CRC analysis distinguishes **simulated Spot55 observations aggregated from the
-same HD section** from **measured Visium P2 and other serial sections**. Simulated
-observations can be compared with native fine-scale counts from the same section.
-For measured Visium, the matched HD/Xenium sections are adjacent sections and
-support appropriate regional or cell-type comparisons, not bin-level ground
-truth at identical locations. The measured P2 analysis also compares the
-pretrained model with adaptation using target coarse observations. Case-specific
-weights and the complete downstream analysis scripts are not distributed in
-this inference package.
+These data are used for downstream reconstruction and microenvironment analysis,
+not for base-model training or selection. CRC P2
+(`WT_Colorectal_FFPE_6p5mm`) is also part of the fixed test set and does not
+add an independent test case. Cross-assay serial sections are not bin-level
+ground truth at identical locations.
 
 ## Downstream ST-TNBC cohort
 
 Source: [ST TNBC, Zenodo 14204217](https://zenodo.org/records/14204217).
 The cohort uses original Spatial Transcriptomics (ST v1) on fresh-frozen tissue,
-with **100 µm spot diameter and 150 µm spacing**. There are 106
-`ST_TNBC_<specimen>_<array>_<subarray>` resources representing 94 specimens in
-92 patient groups. Specimen numbers are 1–16 and 19–96; a specimen can contain
-multiple arrays or subarrays. TNBC30 is a recurrence specimen from TNBC53, and
-TNBC66 is a recurrence specimen from TNBC58; neither represents a new patient.
+with **100 µm spot diameter and 150 µm spacing**. It comprises 106 arrays or
+subarrays from 94 specimens in 92 patient groups.
 
-The main inputs are the authors' `rawCountsMatrices`, `byArray`, original H&E
-images and spatial annotations. `Clinical/ids.RDS` maps arrays to specimens;
-`Clinical.RDS` and `Clinical.xlsx` provide clinical data. Clinical statistics use
-patient groups; serial sections and recurrence specimens do not increase the
-patient sample size.
-
-The cohort analysis includes:
-
-- **Spatial analysis of 82 patients**, one primary section per patient: specimen
-  numbers 1–16 and 19–96 excluding
-  `11, 24, 26, 30, 34, 36, 49, 55, 60, 66, 68, 79`.
-  These are the inclusion criteria for this analysis, not a blanket low-quality
-  designation for excluded samples.
-- **Clinical and raw RNA analysis of 92 patient groups**, a different denominator
-  from the spatial analysis.
-- Specimens 31, 32 and 45 are included in both illustrative and cohort analyses;
-  the cohort analysis is exploratory for these cases, not independent validation.
-  Spatial analyses use the same 1,485 measured genes as the normalization
-  denominator. Missing observations in the 2,000-gene panel must not be treated
-  as measured zeros.
-- The four local examples are `ST_TNBC_31_CN16_C2`, `ST_TNBC_32_CN16_E1`,
-  `ST_TNBC_32_CN16_E2` and `ST_TNBC_45_CN23_C1`; E1 and E2 from specimen 32 belong
-  to the same patient.
-
-The cohort is not used for base-model training or selection and has no native
-8 µm RNA ground truth. The 100 µm ST v1 geometry requires appropriate
-preprocessing and whole-section inference adapters; **raw ST v1 inputs cannot
-be used directly as Spot55 fine-tuning inputs in this package**. Downstream
-whole-section stitching averages predictions across positions and fills gaps;
-the final stitched maps are not claimed to preserve strict per-spot conservation.
-This page describes the data and analysis scope. The package does not include
-an ST v1 whole-section adapter or cohort inference outputs.
+This cohort is not used for base-model training or selection and has no native
+8 µm RNA ground truth. Whole-section inference uses the
+[ST100 adapter](workflows.md#old-st--st-tnbc-100-µm-circles-and-nine-fovs).
+ST v1 inputs cannot be used directly as Spot55 fine-tuning inputs. Cohort
+inference outputs are not bundled.
 
 ## Optional fine-tuning and included examples
 

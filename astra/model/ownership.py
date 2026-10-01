@@ -14,7 +14,7 @@ def _spatial_owner(owner_map: torch.Tensor) -> torch.Tensor:
     if owner.ndim == 2:
         owner = owner.unsqueeze(0)
     if owner.ndim != 3 or owner.dtype != torch.long:
-        raise TypeError("v012 owner_map must be int64 [batch,rows,columns]")
+        raise TypeError("ASTRA owner_map must be int64 [batch,rows,columns]")
     return owner
 
 
@@ -23,7 +23,7 @@ def _spatial_valid(field_valid: torch.Tensor, shape: tuple[int, int, int]) -> to
     if valid.ndim == 2:
         valid = valid.unsqueeze(0)
     if valid.shape != shape or valid.dtype != torch.bool:
-        raise TypeError("v012 field_valid must be bool and match owner_map")
+        raise TypeError("ASTRA field_valid must be bool and match owner_map")
     return valid
 
 
@@ -38,7 +38,7 @@ def _segment_ids(owner: torch.Tensor, parents: int) -> tuple[torch.Tensor, torch
 def parent_child_counts(owner_map: torch.Tensor, parents: int) -> torch.Tensor:
     owner = _spatial_owner(owner_map)
     if parents <= 0:
-        raise ValueError("v012 requires at least one padded parent slot")
+        raise ValueError("ASTRA requires at least one padded parent slot")
     segments, covered = _segment_ids(owner, int(parents))
     result = torch.zeros(
         owner.shape[0] * int(parents), dtype=torch.int64, device=owner.device
@@ -102,17 +102,17 @@ def validate_owner_batch(
         or valid_parent.device != owner.device
         or valid_field.device != owner.device
     ):
-        raise TypeError("v012 parent_valid must be bool [batch,parents] on one device")
+        raise TypeError("ASTRA parent_valid must be bool [batch,parents] on one device")
     parents = valid_parent.shape[1]
     if bool(torch.any(owner < -1)) or bool(torch.any(owner >= parents)):
-        raise ValueError("v012 owner id lies outside {-1, ..., parents-1}")
+        raise ValueError("ASTRA owner id lies outside {-1, ..., parents-1}")
     if bool(torch.any((owner >= 0) & ~valid_field)):
-        raise ValueError("v012 invalid field cell cannot have an owner")
+        raise ValueError("ASTRA invalid field cell cannot have an owner")
     counts = parent_child_counts(owner, parents)
     if bool(torch.any(valid_parent & (counts == 0))):
-        raise ValueError("v012 valid parent must own at least one child")
+        raise ValueError("ASTRA valid parent must own at least one child")
     if bool(torch.any(~valid_parent & (counts != 0))):
-        raise ValueError("v012 invalid padded parent owns children")
+        raise ValueError("ASTRA invalid padded parent owns children")
     if check_connectivity:
         owner_cpu = owner.detach().cpu()
         valid_cpu = valid_parent.detach().cpu()
@@ -121,7 +121,7 @@ def validate_owner_batch(
                 if not is_single_4_connected(
                     owner_cpu[batch_index] == int(parent_index)
                 ):
-                    raise ValueError("v012 parent mask is not one 4-connected region")
+                    raise ValueError("ASTRA parent mask is not one 4-connected region")
 
 
 @dataclass(frozen=True)
@@ -147,7 +147,7 @@ def derive_parent_geometry(
         valid_parent = valid_parent.unsqueeze(0)
     batch, rows, columns = owner.shape
     if cell_um <= 0 or valid_parent.shape[0] != batch:
-        raise ValueError("v012 geometry dimensions differ")
+        raise ValueError("ASTRA geometry dimensions differ")
     parents = valid_parent.shape[1]
     segments, covered = _segment_ids(owner, parents)
     flat_segments = segments[covered]

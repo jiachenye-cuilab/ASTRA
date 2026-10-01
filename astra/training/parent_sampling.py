@@ -25,7 +25,7 @@ def random_owner_with_resampling(seed, generator, stratum):
             sample = generate_random_owner(effective, config=generator, coverage_stratum=stratum,
                                            device="cpu", audit_connectivity=True)
         except RuntimeError as error:
-            if str(error) != f"v033 generator failed after {generator.maximum_attempts} attempts for seed {effective}":
+            if str(error) != f"ASTRA generator failed after {generator.maximum_attempts} attempts for seed {effective}":
                 raise
             if retry == 7:
                 raise RuntimeError(f"random owner generator exhausted requested seed {seed}") from error

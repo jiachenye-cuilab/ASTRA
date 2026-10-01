@@ -15,7 +15,7 @@ class MaskedLocalResidualBlock(nn.Module):
         channels = int(channels)
         groups = int(groups)
         if channels <= 0 or groups <= 0 or channels % groups:
-            raise ValueError("v022 image residual block dimensions differ")
+            raise ValueError("ASTRA image residual block dimensions differ")
         self.normalization = nn.GroupNorm(groups, channels)
         self.first = nn.Conv2d(
             channels, channels, kernel_size=3, padding=1, bias=False
@@ -26,7 +26,7 @@ class MaskedLocalResidualBlock(nn.Module):
 
     def forward(self, value: torch.Tensor, mask: torch.Tensor) -> torch.Tensor:
         if value.ndim != 4 or mask.shape != value.shape[:1] + (1,) + value.shape[2:]:
-            raise ValueError("v022 image residual mask shape differs")
+            raise ValueError("ASTRA image residual mask shape differs")
         update = self.normalization(value)
         update = self.first(update) * mask
         update = F.gelu(update)
@@ -58,7 +58,7 @@ class ExpandedMaskedImageEncoder(nn.Module):
             or any(value <= 0 for value in dilations)
             or residual_blocks <= 0
         ):
-            raise ValueError("v022 image encoder dimensions differ")
+            raise ValueError("ASTRA image encoder dimensions differ")
         channels = (input_channels,) + (hidden_channels,) * len(dilations)
         self.layers = nn.ModuleList(
             nn.Conv2d(
@@ -80,7 +80,7 @@ class ExpandedMaskedImageEncoder(nn.Module):
 
     def forward(self, image: torch.Tensor, field_valid: torch.Tensor) -> torch.Tensor:
         if image.ndim != 4 or field_valid.shape != image.shape[:1] + image.shape[2:]:
-            raise ValueError("v022 image/valid field shapes differ")
+            raise ValueError("ASTRA image/valid field shapes differ")
         mask = field_valid[:, None].to(dtype=image.dtype)
         hidden = image * mask
         for layer in self.layers:

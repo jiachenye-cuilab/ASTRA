@@ -109,10 +109,10 @@ class StripRgbTiffReader:
             and self.planar_configuration == 1
             and self.rows_per_strip > 0
         ):
-            raise ValueError("v030 only supports uncompressed top-left chunky RGB strips")
+            raise ValueError("ASTRA only supports uncompressed top-left chunky RGB strips")
         expected_strips = (self.height + self.rows_per_strip - 1) // self.rows_per_strip
         if len(self.strip_offsets) != expected_strips or len(self.strip_byte_counts) != expected_strips:
-            raise ValueError("v030 TIFF strip table length differs")
+            raise ValueError("ASTRA TIFF strip table length differs")
         self._file = None
         self._cache: OrderedDict[int, np.ndarray] = OrderedDict()
 
@@ -143,7 +143,7 @@ class StripRgbTiffReader:
             rows,
             self.rows_per_strip,
         }:
-            raise ValueError("v030 TIFF strip byte count differs")
+            raise ValueError("ASTRA TIFF strip byte count differs")
         self._file.seek(self.strip_offsets[index])
         payload = self._file.read(stored_bytes)
         if len(payload) != stored_bytes:
@@ -158,7 +158,7 @@ class StripRgbTiffReader:
 
 
 class _AreaStripReader(StripRgbTiffReader):
-    """Expose strip TIFFs through the small tile interface used by v008."""
+    """Expose strip TIFFs through the image tile interface."""
 
     @property
     def tile_width(self) -> int:

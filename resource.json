@@ -39,6 +39,8 @@
       "platform": "10x Visium HD Whole Transcriptome",
       "preservation": "Fresh Frozen",
       "description": "11 mm fresh-frozen human colon cancer section with WT Visium HD and H&E.",
+      "source_url": "https://www.10xgenomics.com/datasets/visium-hd-cytassist-11mm-human-colon-cancer-HE",
+      "software_version": "spaceranger-4.1.0",
       "feature_slice": "data/WT_Colon_FF_11mm/Visium_HD_11mm_Human_Colon_Cancer_Fresh_Frozen_feature_slice.h5",
       "tissue_image": "data/WT_Colon_FF_11mm/Visium_HD_11mm_Human_Colon_Cancer_Fresh_Frozen_tissue_image.btf"
     },
@@ -48,6 +50,8 @@
       "platform": "10x Visium HD Whole Transcriptome",
       "preservation": "FFPE",
       "description": "Human brain cancer FFPE section with WT Visium HD and H&E.",
+      "source_url": "https://www.10xgenomics.com/datasets/visium-hd-cytassist-6p5mm-human-brain-cancer",
+      "software_version": "spaceranger-4.1.0",
       "feature_slice": "data/WT_Brain_FFPE_6p5mm/Visium_HD_6p5mm_Human_Brain_Cancer_feature_slice.h5",
       "tissue_image": "data/WT_Brain_FFPE_6p5mm/Visium_HD_6p5mm_Human_Brain_Cancer_tissue_image.btf"
     },
@@ -58,6 +62,7 @@
       "preservation": "FFPE",
       "description": "Human kidney FFPE section with WT Visium HD and H&E. Space Ranger 4.0.1 is the default input; version 3.1.2 reprocesses the same section.",
       "source_url": "https://www.10xgenomics.com/datasets/visium-hd-cytassist-gene-expression-libraries-human-kidney-ffpe-v4",
+      "software_version": "spaceranger-4.0.1",
       "feature_slice": "data/WT_Kidney_FFPE_6p5mm/Visium_HD_Human_Kidney_FFPE_feature_slice.h5",
       "tissue_image": "data/WT_Kidney_FFPE_6p5mm/Visium_HD_Human_Kidney_FFPE_tissue_image.btf"
     },
@@ -68,6 +73,7 @@
       "preservation": "FFPE",
       "description": "Human lymph node FFPE section with WT Visium HD and H&E, processed with Space Ranger 4.0.1.",
       "source_url": "https://www.10xgenomics.com/datasets/visium-hd-cytassist-gene-expression-libraries-human-lymph-node-v4",
+      "software_version": "spaceranger-4.0.1",
       "feature_slice": "data/WT_Lymph_Node_FFPE_6p5mm/Visium_HD_Human_Lymph_Node_FFPE_feature_slice.h5",
       "tissue_image": "data/WT_Lymph_Node_FFPE_6p5mm/Visium_HD_Human_Lymph_Node_FFPE_tissue_image.tif"
     },
@@ -77,6 +83,8 @@
       "platform": "10x Visium HD Whole Transcriptome",
       "preservation": "FFPE",
       "description": "Human prostate cancer FFPE section with WT Visium HD and H&E.",
+      "source_url": "https://www.10xgenomics.com/datasets/visium-hd-cytassist-gene-expression-libraries-human-prostate-cancer-ffpe",
+      "software_version": "spaceranger-4.0.1",
       "feature_slice": "data/WT_Prostate_FFPE_6p5mm/Visium_HD_Human_Prostate_Cancer_FFPE_feature_slice.h5",
       "tissue_image": "data/WT_Prostate_FFPE_6p5mm/Visium_HD_Human_Prostate_Cancer_FFPE_tissue_image.tif"
     },
@@ -86,6 +94,8 @@
       "platform": "10x Visium HD Whole Transcriptome",
       "preservation": "Fixed Frozen",
       "description": "11 mm fixed-frozen human breast cancer section with WT Visium HD and H&E.",
+      "source_url": "https://www.10xgenomics.com/datasets/visium-hd-cytassist-11mm-human-breast-cancer",
+      "software_version": "spaceranger-4.1.0",
       "feature_slice": "data/WT_Breast_Fixed_Frozen_11mm/Visium_HD_11mm_Human_Breast_Cancer_feature_slice.h5",
       "tissue_image": "data/WT_Breast_Fixed_Frozen_11mm/Visium_HD_11mm_Human_Breast_Cancer_tissue_image.btf"
     },
@@ -95,6 +105,8 @@
       "platform": "10x Visium HD Whole Transcriptome",
       "preservation": "FFPE",
       "description": "Human heart FFPE section with WT Visium HD and H&E.",
+      "source_url": "https://www.10xgenomics.com/datasets/visium-hd-cytassist-6p5mm-human-heart",
+      "software_version": "spaceranger-4.1.0",
       "feature_slice": "data/WT_Heart_FFPE_6p5mm/Visium_HD_6p5mm_Human_Heart_feature_slice.h5",
       "tissue_image": "data/WT_Heart_FFPE_6p5mm/Visium_HD_6p5mm_Human_Heart_tissue_image.btf"
     },
@@ -104,6 +116,8 @@
       "platform": "10x Visium HD Whole Transcriptome",
       "preservation": "FFPE",
       "description": "11 mm human pancreas FFPE section with WT Visium HD and H&E.",
+      "source_url": "https://www.10xgenomics.com/datasets/visium-hd-cytassist-11mm-human-pancreas",
+      "software_version": "spaceranger-4.1.0",
       "feature_slice": "data/WT_Pancreas_FFPE_11mm/Visium_HD_11mm_Human_Pancreas_feature_slice.h5",
       "tissue_image": "data/WT_Pancreas_FFPE_11mm/Visium_HD_11mm_Human_Pancreas_tissue_image.btf"
     },
@@ -113,6 +127,8 @@
       "platform": "10x Visium HD 3'",
       "preservation": "Fresh Frozen",
       "description": "Human ovarian cancer section with Visium HD 3' and H&E.",
+      "source_url": "https://www.10xgenomics.com/datasets/visium-hd-three-prime-ovarian-cancer-fresh-frozen",
+      "software_version": "spaceranger-4.0.1",
       "feature_slice": "data/HD3_Ovarian_Cancer/Visium_HD_3prime_Human_Ovarian_Cancer_feature_slice.h5",
       "tissue_image": "data/HD3_Ovarian_Cancer/Visium_HD_3prime_Human_Ovarian_Cancer_tissue_image.btf"
     },
@@ -122,6 +138,8 @@
       "platform": "10x Visium HD 3'",
       "preservation": "Fresh Frozen",
       "description": "Human lymph node section with Visium HD 3' and H&E.",
+      "source_url": "https://www.10xgenomics.com/datasets/visium-hd-three-prime-human-lymph-node-fresh-frozen",
+      "software_version": "spaceranger-4.1.0",
       "feature_slice": "data/HD3_Lymph_Node/Visium_HD_3prime_Human_Lymph_Node_feature_slice.h5",
       "tissue_image": "data/HD3_Lymph_Node/Visium_HD_3prime_Human_Lymph_Node_tissue_image.btf"
     },
@@ -131,6 +149,8 @@
       "platform": "10x Visium HD 3'",
       "preservation": "Fresh Frozen",
       "description": "Human tonsil section with Visium HD 3' and H&E.",
+      "source_url": "https://www.10xgenomics.com/datasets/visium-hd-three-prime-human-tonsil-fresh-frozen",
+      "software_version": "spaceranger-4.1.0",
       "feature_slice": "data/HD3_Tonsil/Visium_HD_3prime_Human_Tonsil_feature_slice.h5",
       "tissue_image": "data/HD3_Tonsil/Visium_HD_3prime_Human_Tonsil_tissue_image.btf"
     },
@@ -140,8 +160,76 @@
       "platform": "10x Visium HD 3'",
       "preservation": "Fresh Frozen",
       "description": "Human pancreatic cancer section with Visium HD 3' and H&E.",
+      "source_url": "https://www.10xgenomics.com/datasets/visium-hd-three-prime-human-pancreatic-cancer-fresh-frozen",
+      "software_version": "spaceranger-4.0.1",
       "feature_slice": "data/HD3_Pancreatic_Cancer/Visium_HD_3prime_Human_Pancreatic_Cancer_feature_slice.h5",
       "tissue_image": "data/HD3_Pancreatic_Cancer/Visium_HD_3prime_Human_Pancreatic_Cancer_tissue_image.btf"
+    },
+    "WT_Ovarian_FF_6p5mm": {
+      "type": "dataset",
+      "collection": "visium_hd_wt",
+      "platform": "10x Visium HD Whole Transcriptome",
+      "preservation": "Fresh Frozen",
+      "description": "6.5 mm fresh-frozen human ovarian cancer section with WT Visium HD and H&E; deeply sequenced dataset.",
+      "source_url": "https://www.10xgenomics.com/datasets/visium-hd-cytassist-gene-expression-ovarian-cancer-discovery-fresh-frozen",
+      "software_version": "spaceranger-4.0.1",
+      "feature_slice": "data/WT_Ovarian_FF_6p5mm/Visium_HD_Human_Ovarian_Cancer_FF_feature_slice.h5",
+      "tissue_image": "data/WT_Ovarian_FF_6p5mm/Visium_HD_Human_Ovarian_Cancer_FF_tissue_image.btf"
+    },
+    "HD3_Ovarian_Cancer_FF": {
+      "type": "dataset",
+      "collection": "visium_hd_3prime",
+      "platform": "10x Visium HD 3'",
+      "preservation": "Fresh Frozen",
+      "description": "Fresh-frozen human ovarian cancer section with Visium HD 3' and H&E; deeply sequenced dataset, adjacent to WT_Ovarian_FF_6p5mm.",
+      "source_url": "https://www.10xgenomics.com/datasets/visium-hd-three-prime-ovarian-cancer-discovery-fresh-frozen",
+      "software_version": "spaceranger-4.0.1",
+      "feature_slice": "data/HD3_Ovarian_Cancer_FF/Visium_HD_3prime_Human_Ovarian_Cancer_FF_feature_slice.h5",
+      "tissue_image": "data/HD3_Ovarian_Cancer_FF/Visium_HD_3prime_Human_Ovarian_Cancer_FF_tissue_image.btf"
+    },
+    "WT_Breast_FF_Ultima": {
+      "type": "dataset",
+      "collection": "visium_hd_wt",
+      "platform": "10x Visium HD Whole Transcriptome",
+      "preservation": "Fresh Frozen",
+      "description": "Fresh-frozen human breast cancer section with WT Visium HD, Ultima sequencing and H&E.",
+      "source_url": "https://www.10xgenomics.com/datasets/visium-hd-cytassist-gene-expression-libraries-human-breast-cancer-ff-ultima-4",
+      "software_version": "spaceranger-4.0.1",
+      "feature_slice": "data/WT_Breast_FF_Ultima/Visium_HD_FF_Human_Breast_Cancer_feature_slice.h5",
+      "tissue_image": "data/WT_Breast_FF_Ultima/Visium_HD_FF_Human_Breast_Cancer_tissue_image.tif"
+    },
+    "WT_Colorectal_FFPE_6p5mm": {
+      "type": "dataset",
+      "collection": "visium_hd_wt",
+      "platform": "10x Visium HD Whole Transcriptome",
+      "preservation": "FFPE",
+      "description": "6.5 mm human colorectal cancer FFPE section (CRC P2) with WT Visium HD and H&E.",
+      "source_url": "https://www.10xgenomics.com/datasets/visium-hd-cytassist-gene-expression-libraries-of-human-crc-v4",
+      "software_version": "spaceranger-4.0.1",
+      "feature_slice": "data/WT_Colorectal_FFPE_6p5mm/Visium_HD_Human_Colon_Cancer_feature_slice.h5",
+      "tissue_image": "data/WT_Colorectal_FFPE_6p5mm/Visium_HD_Human_Colon_Cancer_tissue_image.btf"
+    },
+    "WT_Colon_FFPE_6p5mm": {
+      "type": "dataset",
+      "collection": "visium_hd_wt",
+      "platform": "10x Visium HD Whole Transcriptome",
+      "preservation": "FFPE",
+      "description": "6.5 mm human colon cancer FFPE section with WT Visium HD and H&E; distinct from CRC P2.",
+      "source_url": "https://www.10xgenomics.com/datasets/visium-hd-cytassist-6p5mm-human-colon-cancer",
+      "software_version": "spaceranger-4.1.0",
+      "feature_slice": "data/WT_Colon_FFPE_6p5mm/Visium_HD_6p5mm_Human_Colon_Cancer_feature_slice.h5",
+      "tissue_image": "data/WT_Colon_FFPE_6p5mm/Visium_HD_6p5mm_Human_Colon_Cancer_tissue_image.btf"
+    },
+    "WT_Pancreas_FFPE_6p5mm_v4p0p1": {
+      "type": "dataset",
+      "collection": "visium_hd_wt",
+      "platform": "10x Visium HD Whole Transcriptome",
+      "preservation": "FFPE",
+      "description": "6.5 mm human pancreas FFPE section with WT Visium HD and H&E.",
+      "source_url": "https://www.10xgenomics.com/datasets/visium-hd-cytassist-gene-expression-libraries-human-pancreas-4",
+      "software_version": "spaceranger-4.0.1",
+      "feature_slice": "data/WT_Pancreas_FFPE_6p5mm_v4p0p1/Visium_HD_Human_Pancreas_feature_slice.h5",
+      "tissue_image": "data/WT_Pancreas_FFPE_6p5mm_v4p0p1/Visium_HD_Human_Pancreas_tissue_image.btf"
     }
   }
 }

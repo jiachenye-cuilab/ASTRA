@@ -3,8 +3,8 @@ from astra.model.model import Direct8Model
 
 
 def model_class(family):
-    if family != 'v030':
-        raise ValueError('this release trains the published ASTRA v030 architecture')
+    if family not in ('ASTRA', 'v030'):
+        raise ValueError('this release trains the published ASTRA architecture')
     return Direct8Model
 
 

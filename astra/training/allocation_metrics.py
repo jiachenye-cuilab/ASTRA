@@ -20,7 +20,7 @@ def moments(prediction, truth):
 
 
 def decompose(prediction, truth, counts):
-    """Reuse v032 round005 allocation_diagnostic definitions, without old-version imports."""
+    """Compute allocation diagnostics using observed counts and predicted segment masses."""
     p, y, c = prediction.double(), truth.double(), counts.double()
     for value in (p, y):
         if not bool(torch.isfinite(value).all() & (value >= 0).all()):

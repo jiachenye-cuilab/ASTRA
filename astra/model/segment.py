@@ -42,14 +42,14 @@ def build_segment_layout(
         or owner.shape[1] % 4
         or owner.shape[2] % 4
     ):
-        raise ValueError("v016 owner/valid layout differs")
+        raise ValueError("ASTRA owner/valid layout differs")
     batch, rows, columns = owner.shape
     groups_y, groups_x = rows // 4, columns // 4
     groups = groups_y * groups_x
     if parent_slots <= 0:
-        raise ValueError("v016 parent slot count must be positive")
+        raise ValueError("ASTRA parent slot count must be positive")
     if validate and bool(torch.any((owner < -1) | (owner >= parent_slots))):
-        raise ValueError("v016 owner index lies outside padded parent slots")
+        raise ValueError("ASTRA owner index lies outside padded parent slots")
     owner_slots = int(parent_slots) + 1
     yy = torch.arange(rows, device=owner.device)[:, None]
     xx = torch.arange(columns, device=owner.device)[None, :]

@@ -225,7 +225,7 @@ def _connectivity_ok(
             break
         labels = updated
     else:
-        raise RuntimeError("v033 CUDA connectivity propagation did not converge")
+        raise RuntimeError("ASTRA CUDA connectivity propagation did not converge")
 
     flat_owner = owner.reshape(batch, cells)
     flat_labels = labels.reshape(batch, cells)
@@ -405,7 +405,7 @@ def _generate_masks(
     config = generator_config.validate()
     device = torch.device(device)
     if device.type not in ("cpu", "cuda") or type(batch_size) is not int or batch_size <= 0 or not items:
-        raise ValueError("v033 CUDA generator boundary differs")
+        raise ValueError("ASTRA CUDA generator boundary differs")
     if any(type(item["mask_seed"]) is not int or type(item["coverage_stratum"]) is not int
            or not 0 <= item["coverage_stratum"] < len(config.coverage_strata) for item in items):
         raise ValueError("mask seeds and coverage strata must be explicit valid integers")
@@ -469,7 +469,7 @@ def _generate_masks(
                 )
             active = remaining
     if any(value is None for value in result):
-        raise RuntimeError("v033 CUDA generator left an empty result")
+        raise RuntimeError("ASTRA CUDA generator left an empty result")
     return [value for value in result if value is not None]
 
 

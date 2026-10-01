@@ -20,7 +20,7 @@ class DilatedImageEncoder(nn.Module):
     ) -> None:
         super().__init__()
         if input_channels <= 0 or hidden_channels <= 0 or not dilations:
-            raise ValueError("v012 image encoder dimensions differ")
+            raise ValueError("ASTRA image encoder dimensions differ")
         channels = (int(input_channels),) + (int(hidden_channels),) * len(dilations)
         self.layers = nn.ModuleList(
             nn.Conv2d(
@@ -36,7 +36,7 @@ class DilatedImageEncoder(nn.Module):
 
     def forward(self, image: torch.Tensor, field_valid: torch.Tensor) -> torch.Tensor:
         if image.ndim != 4 or field_valid.shape != image.shape[:1] + image.shape[2:]:
-            raise ValueError("v012 image/valid field shapes differ")
+            raise ValueError("ASTRA image/valid field shapes differ")
         mask = field_valid[:, None].to(dtype=image.dtype)
         hidden = image * mask
         for layer in self.layers:
@@ -89,7 +89,7 @@ class ExclusiveOwnerFieldModel(nn.Module):
             )
             <= 0
         ):
-            raise ValueError("v012 model configuration differs")
+            raise ValueError("ASTRA model configuration differs")
         self.num_genes = int(num_genes)
         self.image_feature_dimension = int(image_feature_dimension)
         self.field_shape = (rows, columns)
@@ -158,9 +158,9 @@ class ExclusiveOwnerFieldModel(nn.Module):
             rows,
             columns,
         ):
-            raise ValueError("v012 dense H&E feature layout differs")
+            raise ValueError("ASTRA dense H&E feature layout differs")
         if image.dtype != torch.float32:
-            raise TypeError("v012 dense H&E features must use float32")
+            raise TypeError("ASTRA dense H&E features must use float32")
         return image
 
     @staticmethod
@@ -256,7 +256,7 @@ class ProtocolModel:
     @staticmethod
     def _protocol_ids(protocol_id, *, batch_size, device):
         if protocol_id is None:
-            raise ValueError("v027 requires protocol_id")
+            raise ValueError("ASTRA requires protocol_id")
         ids = torch.as_tensor(protocol_id, device=device)
         if ids.dtype not in (
             torch.uint8,

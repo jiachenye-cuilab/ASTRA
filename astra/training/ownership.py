@@ -22,7 +22,7 @@ def _spatial_owner(owner_map: torch.Tensor) -> torch.Tensor:
     if owner.ndim == 2:
         owner = owner.unsqueeze(0)
     if owner.ndim != 3 or owner.dtype != torch.long:
-        raise TypeError("v033 owner_map must be int64 [batch,rows,columns]")
+        raise TypeError("ASTRA owner_map must be int64 [batch,rows,columns]")
     return owner
 
 
@@ -31,7 +31,7 @@ def _spatial_valid(field_valid: torch.Tensor, shape: tuple[int, int, int]) -> to
     if valid.ndim == 2:
         valid = valid.unsqueeze(0)
     if valid.shape != shape or valid.dtype != torch.bool:
-        raise TypeError("v033 field_valid must be bool and match owner_map")
+        raise TypeError("ASTRA field_valid must be bool and match owner_map")
     return valid
 
 
@@ -46,7 +46,7 @@ def _segment_ids(owner: torch.Tensor, parents: int) -> tuple[torch.Tensor, torch
 def parent_child_counts(owner_map: torch.Tensor, parents: int) -> torch.Tensor:
     owner = _spatial_owner(owner_map)
     if parents <= 0:
-        raise ValueError("v033 requires at least one padded parent slot")
+        raise ValueError("ASTRA requires at least one padded parent slot")
     segments, covered = _segment_ids(owner, int(parents))
     result = torch.zeros(
         owner.shape[0] * int(parents), dtype=torch.int64, device=owner.device
@@ -114,17 +114,17 @@ def validate_owner_batch(
         or valid_parent.device != owner.device
         or valid_field.device != owner.device
     ):
-        raise TypeError("v033 parent_valid must be bool [batch,parents] on one device")
+        raise TypeError("ASTRA parent_valid must be bool [batch,parents] on one device")
     parents = valid_parent.shape[1]
     if bool(torch.any(owner < -1)) or bool(torch.any(owner >= parents)):
-        raise ValueError("v033 owner id lies outside {-1, ..., parents-1}")
+        raise ValueError("ASTRA owner id lies outside {-1, ..., parents-1}")
     if bool(torch.any((owner >= 0) & ~valid_field)):
-        raise ValueError("v033 invalid field cell cannot have an owner")
+        raise ValueError("ASTRA invalid field cell cannot have an owner")
     counts = parent_child_counts(owner, parents)
     if bool(torch.any(valid_parent & (counts == 0))):
-        raise ValueError("v033 valid parent must own at least one child")
+        raise ValueError("ASTRA valid parent must own at least one child")
     if bool(torch.any(~valid_parent & (counts != 0))):
-        raise ValueError("v033 invalid padded parent owns children")
+        raise ValueError("ASTRA invalid padded parent owns children")
     if check_connectivity:
         owner_cpu = owner.detach().cpu()
         valid_cpu = valid_parent.detach().cpu()
@@ -133,7 +133,7 @@ def validate_owner_batch(
                 if not is_single_4_connected(
                     owner_cpu[batch_index] == int(parent_index)
                 ):
-                    raise ValueError("v033 parent mask is not one 4-connected region")
+                    raise ValueError("ASTRA parent mask is not one 4-connected region")
 
 
 def masks_to_owner(
@@ -149,7 +149,7 @@ def masks_to_owner(
     if squeeze:
         value = value.unsqueeze(0)
     if value.ndim != 4 or value.dtype != torch.bool:
-        raise TypeError("v033 masks must be bool [batch,parents,rows,columns]")
+        raise TypeError("ASTRA masks must be bool [batch,parents,rows,columns]")
     batch, parents, rows, columns = value.shape
     valid_field = (
         torch.ones((batch, rows, columns), dtype=torch.bool, device=value.device)
@@ -157,9 +157,9 @@ def masks_to_owner(
         else _spatial_valid(field_valid, (batch, rows, columns))
     )
     if bool(torch.any(value.sum(dim=1) > 1)):
-        raise ValueError("v033 parent masks overlap")
+        raise ValueError("ASTRA parent masks overlap")
     if bool(torch.any(value & ~valid_field[:, None])):
-        raise ValueError("v033 parent mask includes invalid field cells")
+        raise ValueError("ASTRA parent mask includes invalid field cells")
     parent_valid = value.flatten(2).any(dim=-1)
     ids = torch.arange(parents, dtype=torch.long, device=value.device)
     owner = torch.where(
@@ -188,16 +188,16 @@ def aggregate_parent_counts(
     if target.ndim == 3:
         target = target.unsqueeze(0)
     if target.ndim != 4 or target.shape[:3] != owner.shape:
-        raise ValueError("v033 target must be [batch,rows,columns,genes]")
+        raise ValueError("ASTRA target must be [batch,rows,columns,genes]")
     if target.dtype == torch.bool or target.is_floating_point():
-        raise TypeError("v033 synthetic parent counts require integer native UMI")
+        raise TypeError("ASTRA synthetic parent counts require integer native UMI")
     if bool(torch.any(target < 0)):
-        raise ValueError("v033 native UMI must be nonnegative")
+        raise ValueError("ASTRA native UMI must be nonnegative")
     valid_parent = torch.as_tensor(parent_valid, dtype=torch.bool, device=owner.device)
     if valid_parent.ndim == 1:
         valid_parent = valid_parent.unsqueeze(0)
     if valid_parent.shape[0] != owner.shape[0]:
-        raise ValueError("v033 parent_valid batch differs")
+        raise ValueError("ASTRA parent_valid batch differs")
     parents = valid_parent.shape[1]
     segments, covered = _segment_ids(owner, parents)
     genes = target.shape[-1]
@@ -239,7 +239,7 @@ def derive_parent_geometry(
         valid_parent = valid_parent.unsqueeze(0)
     batch, rows, columns = owner.shape
     if cell_um <= 0 or valid_parent.shape[0] != batch:
-        raise ValueError("v033 geometry dimensions differ")
+        raise ValueError("ASTRA geometry dimensions differ")
     parents = valid_parent.shape[1]
     segments, covered = _segment_ids(owner, parents)
     flat_segments = segments[covered]
@@ -331,7 +331,7 @@ def classify_8um_ownership(
     valid = _spatial_valid(field_valid, tuple(owner.shape))
     batch, rows, columns = owner.shape
     if rows % 4 or columns % 4:
-        raise ValueError("v033 field cannot form canonical 8um groups")
+        raise ValueError("ASTRA field cannot form canonical 8um groups")
     grouped_owner = (
         owner.reshape(batch, rows // 4, 4, columns // 4, 4)
         .permute(0, 1, 3, 2, 4)

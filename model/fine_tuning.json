@@ -13,7 +13,7 @@
     "warmup_updates": 8,
     "selection_interval": 10,
     "fine_preservation_weight": 0.25,
-    "trainable_parameters": "full_SRNO",
+    "trainable_parameters": "full_ASTRA",
     "frozen_parameters": "UNI_and_initial_source_teacher",
     "stopping": "fixed_50_epoch_budget; select_best_coarse_NLL_including_epoch0; no_patience_claim"
   },

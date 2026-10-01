@@ -46,7 +46,7 @@ def save_checkpoint(path, model, *, optimizer=None, step=0, training_state=None)
         optimized = [parameter for group in optimizer.param_groups for parameter in group["params"]]
         identities = [id(parameter) for parameter in optimized]
         if len(set(identities)) != len(identities) or not set(identities).issubset(owned):
-            raise ValueError("optimizer must contain unique parameters belonging to this v033 model")
+            raise ValueError("optimizer must contain unique parameters belonging to this ASTRA model")
         payload["optimizer"] = optimizer.state_dict()
     path = Path(path)
     # Exclusive creation keeps existing training and failed-attempt artifacts intact.
@@ -59,12 +59,12 @@ def save_checkpoint(path, model, *, optimizer=None, step=0, training_state=None)
 
 
 def load_checkpoint(path, *, expected_panels=None, device="cpu"):
-    """Restore only v033 payloads, validating ordered genes and component flags."""
+    """Restore ASTRA training payloads, validating ordered genes and component flags."""
     payload = torch.load(path, map_location="cpu", weights_only=True)
     if not isinstance(payload, dict) or payload.get("version") != "v033":
-        raise ValueError("expected a complete v033 checkpoint")
+        raise ValueError("expected a complete ASTRA checkpoint")
     if not isinstance(payload.get("kwargs"), dict) or not isinstance(payload.get("model"), dict):
-        raise ValueError("v033 checkpoint must include constructor arguments and full model state")
+        raise ValueError("ASTRA checkpoint must include constructor arguments and full model state")
     kwargs = deepcopy(payload["kwargs"])
     family = payload.get("model_family", "v033")
     constructor = model_class(family)
@@ -74,7 +74,7 @@ def load_checkpoint(path, *, expected_panels=None, device="cpu"):
         kwargs.setdefault("allocation_post_center_norm", "layernorm")
     panels = GenePanels(kwargs.get("input_gene_ids", ()), kwargs.get("output_gene_ids", ()))
     if payload.get("panels") != panels.as_dict():
-        raise ValueError("v033 checkpoint gene identities/order disagree with constructor arguments")
+        raise ValueError("ASTRA checkpoint gene identities/order disagree with constructor arguments")
     if expected_panels is not None:
         if isinstance(expected_panels, GenePanels):
             expected = expected_panels
@@ -86,12 +86,12 @@ def load_checkpoint(path, *, expected_panels=None, device="cpu"):
                 raise TypeError("expected_panels must be GenePanels or an ordered gene-panel dictionary")
             expected = GenePanels(**expected_panels.as_dict())
         if expected != panels:
-            raise ValueError("v033 checkpoint gene identities/order differ from expected_panels")
+            raise ValueError("ASTRA checkpoint gene identities/order differ from expected_panels")
     step = payload.get("step")
     if isinstance(step, bool) or not isinstance(step, int) or step < 0:
-        raise ValueError("v033 checkpoint step must be a nonnegative integer")
+        raise ValueError("ASTRA checkpoint step must be a nonnegative integer")
     if not isinstance(payload.get("training"), bool):
-        raise ValueError("v033 checkpoint must record a boolean training mode")
+        raise ValueError("ASTRA checkpoint must record a boolean training mode")
     model = constructor(**kwargs)
     # Check metadata before copying any weights, including independent branch flags.
     model.set_extra_state(payload["model"].get("_extra_state"))

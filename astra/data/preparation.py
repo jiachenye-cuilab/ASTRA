@@ -146,11 +146,16 @@ def prepare_arrays(source, model_gene_ids):
     if supplied_available.shape != (len(input_genes),) or supplied_available.dtype != np.bool_:
         raise ValueError("gene_available must be boolean and follow the supplied gene_ids order")
     observed = valid[:, None] & supplied_available[None]
-    if not np.isfinite(counts[observed]).all() or np.any(counts[observed] < 0):
+    observed_counts = counts[observed]
+    if not np.isfinite(observed_counts).all() or np.any(observed_counts < 0):
         raise ValueError("observed available parent counts must be finite and nonnegative")
-    counts = np.where(observed, counts, 0).astype(np.float64)
+    if not np.equal(observed_counts, np.round(observed_counts)).all():
+        raise ValueError("observed available parent counts must be raw integer UMI counts")
+    if np.any(observed_counts >= np.iinfo(np.int64).max):
+        raise ValueError("observed available parent counts exceed the supported int64 count range")
+    counts = np.where(observed, counts, 0).astype(np.int64)
     lookup = {gene: index for index, gene in enumerate(input_genes)}
-    ordered = np.zeros((valid.size, len(genes)), dtype=np.float64)
+    ordered = np.zeros((valid.size, len(genes)), dtype=np.int64)
     available = np.zeros(len(genes), dtype=bool)
     for output, gene in enumerate(genes):
         index = lookup.get(gene)
@@ -186,7 +191,8 @@ def self_test():
                   source_rgb_uint8=np.full((148, 148, 3), 127, dtype=np.uint8), source_rgb_is_native=np.asarray(True),
                   spot_to_rgb=np.asarray([[1., 0., 10.], [0., 1., 10.], [0., 0., 1.]]))
     output = prepare_arrays(source, genes)
-    assert output["parent_counts"][0, :3].tolist() == [3., 7., 0.]
+    assert output["parent_counts"].dtype == np.int64
+    assert output["parent_counts"][0, :3].tolist() == [3, 7, 0]
     assert output["gene_available"].sum() == 2 and output["image_features_2um"].shape == (6, 128, 128)
     assert np.allclose(output["image_features_2um"][3:], 0, atol=1e-6)
     assert np.allclose(output["rgb"], 127/255, atol=1e-7) and output["rgb_valid"].all()

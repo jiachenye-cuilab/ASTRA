@@ -36,7 +36,7 @@ class GenePanels:
 class Direct8Model(BaseModel):
     """Inputs are ordered coarse counts; all spatial gene tensors use output genes only.
 
-    Protocol IDs retain v029 semantics: 0 = 3prime, 1 = WT. The adapter acts on
+    Protocol IDs are 0 = 3prime and 1 = WT. The adapter acts on
     log density before the shared expression encoder. No case adaptation branch.
     """
 
@@ -49,7 +49,7 @@ class Direct8Model(BaseModel):
         if adapter_width <= 0:
             raise ValueError("adapter_width must be positive")
         if "num_genes" in kwargs or "shared_protocol" in kwargs:
-            raise ValueError("v030 derives gene dimensions and fixes asymmetric protocol sharing")
+            raise ValueError("ASTRA derives gene dimensions and fixes asymmetric protocol sharing")
         if expression_normalization not in ("log_density", "cp10k"):
             raise ValueError("expression_normalization must be log_density or cp10k")
         super().__init__(num_genes=len(panels.output_gene_ids), parent_channels=parent_channels,
@@ -104,7 +104,7 @@ class Direct8Model(BaseModel):
             output_gene_ids=list(panels.output_gene_ids), adapter_width=adapter_width,
             parent_channels=parent_channels, gap_prior_mode=gap_prior_mode,
             efficient_execution=efficient_execution, **kwargs)
-        # Omitted defaults retain compatibility with the original v030 checkpoints.
+        # Omitted defaults retain compatibility with the original checkpoints.
         if not self.use_extra_input_genes:
             self.model_kwargs["use_extra_input_genes"] = False
         if not self.use_three_prime_adapter:
@@ -126,7 +126,7 @@ class Direct8Model(BaseModel):
 
     def set_extra_state(self, state):
         if state != self.get_extra_state():
-            raise ValueError("v030 checkpoint gene identities/order differ from this model")
+            raise ValueError("ASTRA checkpoint gene identities/order differ from this model")
 
     def _encode_expression(self, density, image, ids, available, *, parent_area=None):
         available_context = available & self.context_gene_mask

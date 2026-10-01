@@ -43,11 +43,11 @@ class GeneratorConfig:
             or self.coverage_tolerance <= 0
             or self.maximum_attempts <= 0
         ):
-            raise ValueError("v033 generator configuration differs")
+            raise ValueError("ASTRA generator configuration differs")
         previous = 0.0
         for lower, upper in self.coverage_strata:
             if not 0.0 <= lower < upper <= 1.0 or lower < previous:
-                raise ValueError("v033 coverage strata differ")
+                raise ValueError("ASTRA coverage strata differ")
             previous = upper
         return self
 
@@ -94,7 +94,7 @@ def _compress_owner(owner: torch.Tensor, parents: int) -> tuple[torch.Tensor, to
     keep = counts > 0
     old_ids = torch.nonzero(keep, as_tuple=False).flatten()
     if old_ids.numel() == 0:
-        raise ValueError("v033 generated no non-empty parent")
+        raise ValueError("ASTRA generated no non-empty parent")
     lookup = torch.full((parents,), -1, dtype=torch.long, device=owner.device)
     lookup[old_ids] = torch.arange(old_ids.numel(), dtype=torch.long, device=owner.device)
     result = torch.where(owner >= 0, lookup[owner.clamp_min(0)], owner)
@@ -140,7 +140,7 @@ def generate_random_owner(
     else:
         stratum = int(coverage_stratum)
     if stratum < 0 or stratum >= len(cfg.coverage_strata):
-        raise ValueError("v033 coverage stratum index differs")
+        raise ValueError("ASTRA coverage stratum index differs")
     coverage_lower, coverage_upper = cfg.coverage_strata[stratum]
 
     row_axis = torch.arange(rows, device=target_device, dtype=torch.float64) + 0.5
@@ -338,7 +338,7 @@ def generate_random_owner(
             },
         )
     raise RuntimeError(
-        f"v033 generator failed after {cfg.maximum_attempts} attempts for seed {seed}"
+        f"ASTRA generator failed after {cfg.maximum_attempts} attempts for seed {seed}"
     )
 
 
@@ -356,12 +356,12 @@ def axis_aligned_square_owner(
     side = float(side_um)
     phase_y, phase_x = (float(value) for value in phase_um)
     if side <= 0 or cell_um <= 0 or not 0 <= phase_y < side or not 0 <= phase_x < side:
-        raise ValueError("v033 square side/phase differs")
+        raise ValueError("ASTRA square side/phase differs")
     fov_y, fov_x = rows * cell_um, columns * cell_um
     starts_y = torch.arange(phase_y, fov_y - side + 1e-12, side, dtype=torch.float64)
     starts_x = torch.arange(phase_x, fov_x - side + 1e-12, side, dtype=torch.float64)
     if starts_y.numel() == 0 or starts_x.numel() == 0:
-        raise ValueError("v033 phased square program has no full parent")
+        raise ValueError("ASTRA phased square program has no full parent")
     yy = (torch.arange(rows, dtype=torch.float64) + 0.5) * cell_um
     xx = (torch.arange(columns, dtype=torch.float64) + 0.5) * cell_um
     masks = []
@@ -425,7 +425,7 @@ def sparse_spot55_owner(
         or not 0 <= dropout_probability < 1
         or cell_um <= 0
     ):
-        raise ValueError("v033 sparse spot geometry differs")
+        raise ValueError("ASTRA sparse spot geometry differs")
     centers = [(translate_y, translate_x)]
     for index in range(6):
         angle = float(orientation_radians) + index * math.pi / 3.0
@@ -438,7 +438,7 @@ def sparse_spot55_owner(
         torch.any(centers_tensor[:, 0].abs() + radius > fov_y / 2.0 + 1e-12)
         or torch.any(centers_tensor[:, 1].abs() + radius > fov_x / 2.0 + 1e-12)
     ):
-        raise ValueError("v033 sparse spot support is clipped by the FOV")
+        raise ValueError("ASTRA sparse spot support is clipped by the FOV")
     yy = (torch.arange(rows, device=device, dtype=torch.float64) + 0.5) * cell_um - fov_y / 2.0
     xx = (torch.arange(columns, device=device, dtype=torch.float64) + 0.5) * cell_um - fov_x / 2.0
     grid_y, grid_x = torch.meshgrid(yy, xx, indexing="ij")

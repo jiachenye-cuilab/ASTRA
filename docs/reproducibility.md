@@ -17,13 +17,13 @@ define the scientific protocol.
 | [Visium conversion](workflows.md#real-10x-visium-including-ilc-like-sections), [template](../configs/section_visium.json) | Filtered H5 + registered tissue positions → section input | Included; barcode alignment, counts and calibration tests; complete ILC cohort not run |
 | [ST100 adapter](workflows.md), [template](../configs/section_st100.json) | 100 µm counts + coordinates + image/cache → nine-FOV mean export and optional separate gap interpolation | Included; synthetic geometry, saved mean, empty-support and tissue-barrier tests; complete raw ST-TNBC cohort not run |
 | [Training code](../astra/training/), [user manifest](../configs/user_training.json), [base recipe](../training/config.json), [partition](../training/dataset_split.json), [panel](../training/panel.json), [geometry](../training/geometry/) | User HD workspace or registered base data → caches/checkpoints; [training guide](training.md) | Included; offline configuration, panel provenance and spatial holdout tests; full training/resume not run |
-| [Fine-tuning code](../astra/fine_tuning/), [recipe](../model/fine_tuning.json) | Coarse target support/selection regions → adapted checkpoint; [fine-tuning guide](fine-tuning.md) | Included; full 50-epoch adaptation not run |
+| [Fine-tuning code](../astra/fine_tuning/), [recipe](../model/fine_tuning.json) | Coarse target support/selection regions → adapted checkpoint; [fine-tuning guide](fine-tuning.md) | Included; local synthetic CPU smoke checked one update, frozen teacher and checkpoint replay for HD16 and Spot55; full 50-epoch adaptation not run |
 | [Portable tests](../tests/), [CPU CI](../.github/workflows/cpu.yml) | Synthetic fixtures and separately enabled pretrained examples → regression checks | Included; local Linux/Python 3.12 CPU execution; hosted CI requires its own run |
 
-ASTRA-only benchmark scores do not reproduce external comparison methods or
-their shared position masks. Downstream statistical analyses and plotting
-assets are not included. Complete paper figure/table-to-script correspondence
-remains to be verified against the submitted paper.
+This method package provides ASTRA workflows and benchmark adapters. External
+comparison implementations, their shared evaluation masks, downstream analyses
+and paper plotting assets are outside its scope; ASTRA benchmark scores alone
+do not reproduce all paper comparisons.
 
 STv1 uses **100 µm diameter / 150 µm pitch**, separate from Spot55 **55 µm
 diameter / 100 µm pitch**. The ST100 guide defines the observation raster,
@@ -73,10 +73,11 @@ GPU; they are separate from these CPU checks.
 | ILC | [Zenodo 14924871](https://zenodo.org/records/14924871); check the record's access, license, citation and linked source before use |
 | ST-TNBC | [Zenodo 14204217](https://zenodo.org/records/14204217); obtain matrices, images and annotations under their record/file-specific terms |
 | UNI1 | Request individual gated access at [MahmoodLab/UNI](https://huggingface.co/MahmoodLab/UNI), accept the owner's terms and obtain `pytorch_model.bin` locally; gated weights are not redistributed |
-| Bundled ASTRA checkpoint and cached features | [Model metadata](../model/metadata.json) records identity. The code's MIT grant is not a separate grant for these assets. Confirmation of upstream UNI-derived asset rights remains pending |
+| Bundled ASTRA checkpoint | ASTRA reconstruction weights trained using frozen UNI1 features; the checkpoint contains no UNI encoder weights. [Model metadata](../model/metadata.json) records identity; applicable upstream UNI terms remain relevant |
+| Cached example features | Precomputed UNI1 outputs for offline example replay; these are features, not UNI encoder weights. Applicable UNI and source-dataset terms remain in effect |
 | Dependencies and optional codecs | Each project's own license and notices apply |
 
-UNI's stated terms include academic/noncommercial conditions and provisions
-for models trained on its outputs. Do not infer unrestricted commercial or
-redistribution rights for ASTRA weights/features from the repository's MIT code
-license. Asset rights require owner confirmation before publication.
+[UNI's upstream terms](https://huggingface.co/MahmoodLab/UNI#license-and-terms-of-use)
+specify academic/noncommercial use and address models trained on UNI outputs.
+The repository's MIT code license does not replace those terms or grant
+additional rights to third-party or UNI-derived assets.

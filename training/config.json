@@ -204,12 +204,12 @@
     "epochs": 1
   },
   "boundaries": {
-    "initialization": "scratch_no_SRNO_checkpoint",
+    "initialization": "scratch_no_pretrained_ASTRA_weights",
     "test_expression_read": false,
-    "panel": "unchanged_Flash_ordered_2000_original_nine_section_provenance",
+    "panel": "fixed_ordered_2000_genes_original_nine_section_provenance",
     "training_coordinates": "existing_training_indices_excluding_all_spatial_monitor_blocks",
     "validation": "12_development_sections_eight_disjoint_monitor_FOVs_each_for_joint_selection",
-    "formal_training": "user_authorized_2026_09_16"
+    "formal_training": "published_base_training_protocol"
   },
   "diagnostics": {
     "enabled": true,
@@ -224,7 +224,7 @@
     "parent_count_strata": false,
     "allocation_decomposition": false
   },
-  "model_family": "v030",
+  "model_family": "ASTRA",
   "image_preprocessing": {
     "mode": "raw"
   },
